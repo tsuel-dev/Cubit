@@ -1,0 +1,49 @@
+{
+  "name": "@cubit-ui/tokens",
+  "version": "3.0.0",
+  "description": "Design tokens and CSS custom properties generator for Cubit UI",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsuel-dev/Cubit.git",
+    "directory": "packages/tokens"
+  },
+  "homepage": "https://github.com/tsuel-dev/Cubit#readme",
+  "bugs": {
+    "url": "https://github.com/tsuel-dev/Cubit/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "web-components",
+    "ui",
+    "design-system",
+    "cubit"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./css/tokens.css": "./dist/css/tokens.css",
+    "./css/dark.css": "./dist/css/dark.css",
+    "./css/*": "./dist/css/*"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7"
+  }
+}

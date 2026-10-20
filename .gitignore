@@ -1,0 +1,26 @@
+# Node / pnpm
+node_modules/
+pnpm-lock.yaml.bak
+
+# 빌드 산출물
+dist/
+.output/
+.vite/
+
+# 테스트 캐시·로그
+*.log
+.eslintcache
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 내부 설계 노트 (공개 저장소 제외 — 공개하려면 이 줄을 삭제)
+ui-component-library-prompt.md
+
+# OpenClaw 인계 보고서 (내부용)
+.oc-handoff/
+
+# publish 임시 tarball
+.packs/

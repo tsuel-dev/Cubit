@@ -1,0 +1,80 @@
+/* Cubit UI Design Tokens - Dark Theme */
+[data-theme="dark"] {
+  --ui-color-bg-canvas: #000000;
+  --ui-color-bg-surface: #121212;
+  --ui-color-bg-muted: #212121;
+  --ui-color-bg-subtle: #424242;
+  --ui-color-bg-secondary: #331d0d;
+  --ui-color-bg-secondary-subtle: #442611;
+  --ui-color-text-primary: #ffffff;
+  --ui-color-text-secondary: #e0e0e0;
+  --ui-color-text-muted: #bdbdbd;
+  --ui-color-text-inverse: #000000;
+  --ui-color-primary: #ff5500;
+  --ui-color-primary-hover: #ff6e26;
+  --ui-color-primary-active: #e04b00;
+  --ui-color-primary-contrast: #ffffff;
+  --ui-color-primary-subtle: #2a1408;
+  --ui-color-border: #424242;
+  --ui-color-border-strong: #9e9e9e;
+  --ui-color-border-muted: #212121;
+  --ui-color-focus-ring: #ff7733;
+  --ui-color-success: #4ade80;
+  --ui-color-success-bg: #052e16;
+  --ui-color-success-contrast: #ffffff;
+  --ui-color-warning: #fbbf24;
+  --ui-color-warning-bg: #451a03;
+  --ui-color-warning-contrast: #000000;
+  --ui-color-error: #f87171;
+  --ui-color-error-bg: #450a0a;
+  --ui-color-error-contrast: #ffffff;
+  --ui-color-info: #38bdf8;
+  --ui-color-info-bg: #082f49;
+  --ui-color-info-contrast: #ffffff;
+  --ui-color-secondary-1: #38bdf8;
+  --ui-color-secondary-2: #2dd4bf;
+  --ui-color-skeleton: #333333;
+  --ui-color-skeleton-shine: #212121;
+  --ui-color-tile: #161616;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ui-color-bg-canvas: #000000;
+    --ui-color-bg-surface: #121212;
+    --ui-color-bg-muted: #212121;
+    --ui-color-bg-subtle: #424242;
+    --ui-color-bg-secondary: #331d0d;
+    --ui-color-bg-secondary-subtle: #442611;
+    --ui-color-text-primary: #ffffff;
+    --ui-color-text-secondary: #e0e0e0;
+    --ui-color-text-muted: #bdbdbd;
+    --ui-color-text-inverse: #000000;
+    --ui-color-primary: #ff5500;
+    --ui-color-primary-hover: #ff6e26;
+    --ui-color-primary-active: #e04b00;
+    --ui-color-primary-contrast: #ffffff;
+    --ui-color-primary-subtle: #2a1408;
+    --ui-color-border: #424242;
+    --ui-color-border-strong: #9e9e9e;
+    --ui-color-border-muted: #212121;
+    --ui-color-focus-ring: #ff7733;
+    --ui-color-success: #4ade80;
+    --ui-color-success-bg: #052e16;
+    --ui-color-success-contrast: #ffffff;
+    --ui-color-warning: #fbbf24;
+    --ui-color-warning-bg: #451a03;
+    --ui-color-warning-contrast: #000000;
+    --ui-color-error: #f87171;
+    --ui-color-error-bg: #450a0a;
+    --ui-color-error-contrast: #ffffff;
+    --ui-color-info: #38bdf8;
+    --ui-color-info-bg: #082f49;
+    --ui-color-info-contrast: #ffffff;
+    --ui-color-secondary-1: #38bdf8;
+    --ui-color-secondary-2: #2dd4bf;
+    --ui-color-skeleton: #333333;
+    --ui-color-skeleton-shine: #212121;
+    --ui-color-tile: #161616;
+  }
+}

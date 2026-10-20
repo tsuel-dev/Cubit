@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cubit UI — Components</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../../packages/tokens/src/css/tokens.css" />
+  <link rel="stylesheet" href="../../packages/tokens/src/css/dark.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background-color: var(--ui-color-bg-canvas);
+      color: var(--ui-color-text-primary);
+      font-family: var(--ui-font-family-base);
+      transition: background-color var(--ui-transition-fast), color var(--ui-transition-fast);
+    }
+
+    /* ===== Sidebar (Ant-style, 항상 다크) ===== */
+    .sidebar {
+      position: fixed;
+      top: 0; bottom: 0; left: 0;
+      width: 268px;
+      background: #101418;
+      color: #aab2bd;
+      display: flex;
+      flex-direction: column;
+      z-index: 60;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 10px;
+      padding: 18px 20px 12px;
+      color: #fff; font-weight: 700; font-size: 16px;
+    }
+    .brand .mark {
+      width: 22px; height: 22px; border-radius: 7px;
+      background: #ff5500; position: relative; flex: none;
+    }
+    .brand .mark::after {
+      content: ''; position: absolute; inset: 6px;
+      background: #101418; border-radius: 2px;
+    }
+    .brand .ver {
+      margin-left: auto; font-size: 11px; font-weight: 500;
+      color: #7d8691; border: 1px solid #2b323b; border-radius: 999px; padding: 2px 8px;
+    }
+    .nav-filter {
+      margin: 6px 16px 10px;
+      background: #1a2027; border: 1px solid #2b323b; color: #e6e9ee;
+      border-radius: 8px; padding: 8px 12px; font-size: 13px; outline: none;
+      transition: border-color var(--ui-transition-fast);
+    }
+    .nav-filter::placeholder { color: #5c6670; }
+    .nav-filter:focus { border-color: #ff5500; }
+    .nav { flex: 1; overflow-y: auto; padding: 4px 10px 28px; }
+    .nav::-webkit-scrollbar { width: 8px; }
+    .nav::-webkit-scrollbar-thumb { background: #2b323b; border-radius: 4px; }
+    .nav-group-title {
+      font-size: 11px; letter-spacing: .07em; text-transform: uppercase;
+      color: #5c6670; margin: 18px 12px 6px; font-weight: 600;
+    }
+    .nav-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 12px; border-radius: 8px;
+      color: #aab2bd; text-decoration: none; font-size: 13.5px;
+      transition: background-color 120ms, color 120ms;
+    }
+    .nav-item:hover { color: #fff; background: #1a2027; }
+    .nav-item.active { color: #ff8a4d; background: #26170f; font-weight: 600; }
+    .nav-item .dot {
+      width: 6px; height: 6px; border-radius: 3px; background: #2b323b; flex: none;
+    }
+    .nav-item.active .dot { background: #ff5500; }
+
+    /* ===== Main ===== */
+    .main { margin-left: 268px; min-height: 100vh; }
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 32px;
+      background-color: var(--ui-color-bg-canvas);
+      border-bottom: 1px solid var(--ui-color-border);
+    }
+    .hamburger {
+      display: none; border: 1px solid var(--ui-color-border); background: transparent;
+      color: inherit; border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 15px;
+    }
+    .crumb { color: var(--ui-color-text-secondary); font-size: 13px; }
+    .crumb b { color: var(--ui-color-text-primary); font-weight: 600; }
+    .topbar-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+    .content { padding: 40px 48px 80px; max-width: 1040px; }
+
+    /* Hero */
+    .hero { padding: 8px 0 4px; }
+    .hero h1 { margin: 0; font-size: 34px; letter-spacing: -0.5px; }
+    .hero p { color: var(--ui-color-text-secondary); max-width: 640px; margin: 10px 0 0; line-height: 1.7; }
+    .hero-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+
+    /* Sections (docs) */
+    section.cat { margin-top: 64px; scroll-margin-top: 76px; }
+    section.cat h2 {
+      margin: 0 0 6px; font-size: 20px; letter-spacing: -0.3px;
+      display: flex; align-items: baseline; gap: 10px;
+    }
+    section.cat h2 .tag {
+      font-size: 11px; color: var(--ui-color-text-muted);
+      font-family: var(--ui-font-family-mono); font-weight: 400;
+    }
+    section.cat .desc {
+      margin: 0 0 16px; font-size: 13.5px; color: var(--ui-color-text-secondary); max-width: 720px; line-height: 1.65;
+    }
+    .preview {
+      background: var(--ui-color-tile);
+      border: 1px solid var(--ui-color-border);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+      margin-bottom: 12px;
+    }
+    .preview.column { flex-direction: column; align-items: stretch; }
+    .preview > * { margin: 0; }
+    .code {
+      background: var(--ui-color-bg-subtle);
+      border: 1px solid var(--ui-color-border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: var(--ui-font-family-mono); font-size: 12.5px;
+      color: var(--ui-color-text-secondary);
+      overflow-x: auto; margin: 0 0 12px; white-space: pre;
+    }
+    .props-title { font-size: 12px; font-weight: 600; color: var(--ui-color-text-muted); margin: 2px 0 8px; letter-spacing: .04em; }
+
+    .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+    /* UX pattern cards */
+    .pattern-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px; margin-top: 16px; align-items: stretch;
+    }
+    .pattern-grid > ui-card { width: 100%; height: 100%; }
+    .result-box { margin-top: 12px; min-height: 64px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+    .result-item {
+      font-size: 14px; color: var(--ui-color-text-secondary);
+      border: 1px solid var(--ui-color-border); border-radius: 8px;
+      padding: 8px 12px; background: var(--ui-color-bg-surface); width: 100%;
+      display: flex; justify-content: space-between; gap: 12px; align-items: center;
+    }
+    .state-panel { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+    .hint { font-size: 12px; color: var(--ui-color-text-muted); margin: 6px 0; }
+    .hint code { font-family: var(--ui-font-family-mono); background: var(--ui-color-bg-muted); border-radius: 4px; padding: 1px 5px; }
+
+    footer.end {
+      margin-top: 72px; padding-top: 16px; border-top: 1px solid var(--ui-color-border);
+      color: var(--ui-color-text-muted); font-size: 12px;
+    }
+    .toast-stack {
+      position: fixed; bottom: 16px; right: 16px;
+      display: flex; flex-direction: column; z-index: 9999;
+    }
+
+    @media (max-width: 940px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .hamburger { display: inline-flex; }
+      .content { padding: 24px 18px 64px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===================== Sidebar ===================== -->
+  <aside class="sidebar">
+    <div class="brand"><span class="mark"></span> Cubit UI <span class="ver">v1.0</span></div>
+    <input id="navFilter" class="nav-filter" placeholder="컴포넌트 검색 (Ctrl+K)" aria-label="컴포넌트 검색" />
+    <nav class="nav" id="navList" aria-label="컴포넌트 목차">
+      <div class="nav-group-title">시작</div>
+      <a class="nav-item" href="#top"><span class="dot"></span>소개</a>
+      <a class="nav-item" href="#patterns"><span class="dot"></span>UX 패턴</a>
+      <div class="nav-group-title">표시</div>
+      <a class="nav-item" href="#button"><span class="dot"></span>Button</a>
+      <a class="nav-item" href="#badge"><span class="dot"></span>Badge</a>
+      <a class="nav-item" href="#avatar"><span class="dot"></span>Avatar</a>
+      <a class="nav-item" href="#card"><span class="dot"></span>Card</a>
+      <a class="nav-item" href="#table"><span class="dot"></span>Table</a>
+      <a class="nav-item" href="#log"><span class="dot"></span>Log</a>
+      <div class="nav-group-title">폼 컨트롤</div>
+      <a class="nav-item" href="#input"><span class="dot"></span>Input</a>
+      <a class="nav-item" href="#select"><span class="dot"></span>Select</a>
+      <a class="nav-item" href="#choice"><span class="dot"></span>Checkbox · Radio · Switch</a>
+      <div class="nav-group-title">피드백</div>
+      <a class="nav-item" href="#alert"><span class="dot"></span>Alert</a>
+      <a class="nav-item" href="#progress"><span class="dot"></span>Progress</a>
+      <a class="nav-item" href="#skeleton"><span class="dot"></span>Skeleton</a>
+      <a class="nav-item" href="#spinner"><span class="dot"></span>Spinner</a>
+      <a class="nav-item" href="#toast"><span class="dot"></span>Toast</a>
+      <div class="nav-group-title">오버레이</div>
+      <a class="nav-item" href="#modal"><span class="dot"></span>Modal</a>
+      <a class="nav-item" href="#drawer"><span class="dot"></span>Drawer</a>
+      <a class="nav-item" href="#dropdown"><span class="dot"></span>Dropdown</a>
+      <a class="nav-item" href="#tooltip"><span class="dot"></span>Tooltip</a>
+      <div class="nav-group-title">내비게이션</div>
+      <a class="nav-item" href="#tabs"><span class="dot"></span>Tabs</a>
+      <a class="nav-item" href="#accordion"><span class="dot"></span>Accordion</a>
+      <a class="nav-item" href="#pagination"><span class="dot"></span>Pagination</a>
+      <a class="nav-item" href="#breadcrumbs"><span class="dot"></span>Breadcrumbs</a>
+      <a class="nav-item" href="#navbar"><span class="dot"></span>Navbar</a>
+      <div class="nav-group-title">v1.1 신규</div>
+      <a class="nav-item" href="#textarea"><span class="dot"></span>Textarea</a>
+      <a class="nav-item" href="#segmented"><span class="dot"></span>Segmented</a>
+      <a class="nav-item" href="#stepper"><span class="dot"></span>Stepper</a>
+      <a class="nav-item" href="#chip"><span class="dot"></span>Chip</a>
+      <a class="nav-item" href="#empty-state"><span class="dot"></span>Empty State</a>
+    </nav>
+  </aside>
+
+  <!-- ===================== Main ===================== -->
+  <div class="main">
+    <header class="topbar">
+      <button id="navBtn" class="hamburger" aria-label="목차 열기">☰</button>
+      <div class="crumb" id="crumb">Cubit UI <b>/ 소개</b></div>
+      <div class="topbar-actions">
+        <ui-badge variant="outline" size="sm">v1.0.0</ui-badge>
+        <ui-button size="sm" variant="secondary" id="themeToggle" aria-label="테마 전환">다크 모드 전환</ui-button>
+      </div>
+    </header>
+
+    <div class="content">
+      <!-- Hero -->
+      <div class="hero" id="top">
+        <h1>Cubit UI</h1>
+        <p>
+          Vanilla Web Components 기반 디자인 시스템. Shadow DOM 캡슐화, CSS Custom Properties 토큰,
+          라이트/다크 자동 대응, WCAG 2.1 AA 포커스 표준. React · Svelte 패키지가 동일 API를 재사용합니다.
+        </p>
+        <div class="hero-badges">
+          <ui-badge variant="primary">Components 25</ui-badge>
+          <ui-badge variant="secondary">React · Svelte 지원</ui-badge>
+          <ui-badge variant="success">WCAG 2.1 AA</ui-badge>
+          <ui-badge variant="outline">Light / Dark</ui-badge>
+          <ui-badge variant="outline">TypeScript 100%</ui-badge>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+          <ui-button variant="primary" onclick="location.hash='button'">컴포넌트 둘러보기</ui-button>
+          <ui-button variant="outline" id="themeToggle2">테마 전환</ui-button>
+        </div>
+      </div>
+
+      <!-- ============ Button ============ -->
+      <section class="cat" id="button" data-crumb="Button">
+        <h2>Button <span class="tag">&lt;ui-button&gt;</span></h2>
+        <p class="desc">variant(primary/secondary/outline/danger) × size(sm/md/lg). 비동기 작업 중에는 <code>disabled</code>와 busy 라벨로 잠그는 것이 표준 패턴입니다.</p>
+
+        <div class="preview">
+          <ui-button variant="primary">Primary</ui-button>
+          <ui-button variant="secondary">Secondary</ui-button>
+          <ui-button variant="outline">Outline</ui-button>
+          <ui-button variant="danger">Danger</ui-button>
+          <ui-button disabled>Disabled</ui-button>
+        </div>
+        <pre class="code">&lt;ui-button variant="primary"&gt;Primary&lt;/ui-button&gt;
+&lt;ui-button variant="danger" disabled&gt;Danger&lt;/ui-button&gt;</pre>
+
+        <div class="preview">
+          <ui-button size="sm" variant="primary">Small</ui-button>
+          <ui-button size="md" variant="primary">Medium</ui-button>
+          <ui-button size="lg" variant="primary">Large</ui-button>
+        </div>
+
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>variant</td><td>'primary' | 'secondary' | 'outline' | 'danger'</td><td>'primary'</td><td>버튼 성격을 결정</td></tr>
+              <tr><td>size</td><td>'sm' | 'md' | 'lg'</td><td>'md'</td><td>크기 프리셋</td></tr>
+              <tr><td>disabled</td><td>boolean</td><td>false</td><td>비활성 + 접근성 속성 연동</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Badge ============ -->
+      <section class="cat" id="badge" data-crumb="Badge">
+        <h2>Badge <span class="tag">&lt;ui-badge&gt;</span></h2>
+        <p class="desc">상태 표시용 캡슐 배지. 실시간 상태에는 variant가 상태에 맞춰 "값"으로 바뀌어야 합니다(고정 표시 금지).</p>
+        <div class="preview">
+          <ui-badge variant="primary">NEW</ui-badge>
+          <ui-badge variant="secondary">SECONDARY</ui-badge>
+          <ui-badge variant="success">Active</ui-badge>
+          <ui-badge variant="warning">Pending</ui-badge>
+          <ui-badge variant="error">Failed</ui-badge>
+          <ui-badge variant="outline">Outline</ui-badge>
+        </div>
+        <pre class="code">&lt;ui-badge variant="success"&gt;Active&lt;/ui-badge&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>variant</td><td>primary | secondary | success | warning | error | outline</td><td>'primary'</td><td>배지 색/톤</td></tr>
+              <tr><td>size</td><td>'sm' | 'md' | 'lg'</td><td>'md'</td><td>크기 프리셋</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Avatar ============ -->
+      <section class="cat" id="avatar" data-crumb="Avatar">
+        <h2>Avatar <span class="tag">&lt;ui-avatar&gt;</span></h2>
+        <p class="desc">이미지가 없으면 이름 이니셜로 자동 대체합니다. 원형이 기본, <code>shape="square"</code> 로 사각 지원.</p>
+        <div class="preview">
+          <ui-avatar name="홍 길동" size="sm"></ui-avatar>
+          <ui-avatar name="홍 길동" size="md"></ui-avatar>
+          <ui-avatar name="홍 길동" size="lg"></ui-avatar>
+          <ui-avatar name="홍 길동" shape="square" size="lg"></ui-avatar>
+          <ui-avatar src="icon.svg" size="md" alt="아이콘"></ui-avatar>
+        </div>
+        <pre class="code">&lt;ui-avatar name="홍 길동" size="lg"&gt;&lt;/ui-avatar&gt;
+&lt;ui-avatar src="/profile.png" size="md"&gt;&lt;/ui-avatar&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>src</td><td>string</td><td>''</td><td>이미지 URL (실패 시 이니셜 대체)</td></tr>
+              <tr><td>name</td><td>string</td><td>''</td><td>이니셜 생성 + aria-label</td></tr>
+              <tr><td>size</td><td>'sm' | 'md' | 'lg'</td><td>'md'</td><td>24/36/48px</td></tr>
+              <tr><td>shape</td><td>'circle' | 'square'</td><td>'circle'</td><td>모양</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Card ============ -->
+      <section class="cat" id="card" data-crumb="Card">
+        <h2>Card <span class="tag">&lt;ui-card&gt;</span></h2>
+        <p class="desc">header · body · footer 3단 슬롯. <code>bordered</code>로 테두리 강조.</p>
+        <div class="preview" style="align-items: flex-start;">
+          <ui-card bordered style="width: 320px;">
+            <div slot="header">Cubit Card</div>
+            <p style="margin: 0;">본문 영역. 카드 내부에서도 토큰이 그대로 적용됩니다.</p>
+            <div slot="footer"><ui-button size="sm" variant="primary">확인</ui-button></div>
+          </ui-card>
+          <ui-card style="width: 320px;">
+            <div slot="header">테두리 없는 카드</div>
+            <p style="margin: 0;">variant 속성으로 배경 톤을 조정할 수 있습니다.</p>
+          </ui-card>
+        </div>
+        <pre class="code">&lt;ui-card bordered&gt;
+  &lt;div slot="header"&gt;제목&lt;/div&gt;
+  본문
+  &lt;div slot="footer"&gt;액션&lt;/div&gt;
+&lt;/ui-card&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>variant</td><td>'default' | 'muted'</td><td>'default'</td><td>표면 톤</td></tr>
+              <tr><td>bordered</td><td>boolean</td><td>false</td><td>테두리 표시</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Table ============ -->
+      <section class="cat" id="table" data-crumb="Table">
+        <h2>Table <span class="tag">&lt;ui-table&gt;</span></h2>
+        <p class="desc">semantic thead/tbody를 슬롯합니다. 파서 제약 때문에 <code>&lt;template&gt;</code>으로 구조를 보존하면 어떤 환경에서도 안전합니다.</p>
+        <div class="preview column">
+          <ui-table striped bordered hoverable>
+            <template data-table>
+              <thead><tr><th>서비스</th><th>포트</th><th>상태</th></tr></thead>
+              <tbody>
+                <tr><td>music.local</td><td>3000</td><td><ui-badge variant="success">정상</ui-badge></td></tr>
+                <tr><td>iou.local</td><td>2000</td><td><ui-badge variant="success">정상</ui-badge></td></tr>
+                <tr><td>link.local</td><td>5173</td><td><ui-badge variant="warning">지연</ui-badge></td></tr>
+              </tbody>
+            </template>
+          </ui-table>
+        </div>
+        <pre class="code">&lt;ui-table striped bordered hoverable&gt;
+  &lt;template&gt;&lt;thead&gt;…&lt;/thead&gt;&lt;tbody&gt;…&lt;/tbody&gt;&lt;/template&gt;
+&lt;/ui-table&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>striped</td><td>boolean</td><td>false</td><td>짝수 행 배경</td></tr>
+              <tr><td>bordered</td><td>boolean</td><td>false</td><td>셀 테두리</td></tr>
+              <tr><td>hoverable</td><td>boolean</td><td>false</td><td>행 hover 배경(point 토큰)</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Input ============ -->
+      <section class="cat" id="input" data-crumb="Input">
+        <h2>Input <span class="tag">&lt;ui-input&gt;</span></h2>
+        <p class="desc">포커스 링은 <code>--ui-color-focus-ring</code> 토큰으로 통일되어 있습니다. Enter 전송은 컨테이너에서 keydown으로 처리하세요.</p>
+        <div class="preview column">
+          <div class="row"><ui-input placeholder="이메일 입력" style="flex:1; min-width:220px;" aria-label="이메일"></ui-input><ui-button size="sm" variant="primary">확인</ui-button></div>
+          <div class="row"><ui-input placeholder="비활성 입력" disabled style="flex:1; min-width:220px;"></ui-input></div>
+        </div>
+        <pre class="code">&lt;ui-input placeholder="이메일 입력" aria-label="이메일"&gt;&lt;/ui-input&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>value</td><td>string</td><td>''</td><td>get/set 지원</td></tr>
+              <tr><td>placeholder</td><td>string</td><td>''</td><td>placeholder</td></tr>
+              <tr><td>disabled</td><td>boolean</td><td>false</td><td>입력 잠금</td></tr>
+              <tr><td style="color:var(--ui-color-text-muted)">이벤트</td><td colspan="3">change — detail { value }</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Select ============ -->
+      <section class="cat" id="select" data-crumb="Select">
+        <h2>Select <span class="tag">&lt;ui-select&gt;</span></h2>
+        <p class="desc">옵션은 <code>&lt;ui-option value&gt;</code> 자식으로 정의합니다.</p>
+        <div class="preview column">
+          <div class="row"><ui-select placeholder="직급 선택" aria-label="직급" style="min-width:200px;"><ui-option value="staff">사원</ui-option><ui-option value="manager">과장</ui-option><ui-option value="director">이사</ui-option></ui-select></div>
+        </div>
+        <pre class="code">&lt;ui-select placeholder="직급 선택"&gt;
+  &lt;ui-option value="staff"&gt;사원&lt;/ui-option&gt;
+&lt;/ui-select&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>value</td><td>string</td><td>''</td><td>선택값</td></tr>
+              <tr><td>placeholder</td><td>string</td><td>''</td><td>placeholder</td></tr>
+              <tr><td>disabled</td><td>boolean</td><td>false</td><td>잠금</td></tr>
+              <tr><td style="color:var(--ui-color-text-muted)">이벤트</td><td colspan="3">change { value } · open · close</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Choice ============ -->
+      <section class="cat" id="choice" data-crumb="Checkbox · Radio · Switch">
+        <h2>Checkbox · Radio · Switch</h2>
+        <p class="desc"><code>checked</code>/<code>disabled</code>/<code>indeterminate</code> 상태. 같은 <code>name</code> 라디오는 단일 선택.</p>
+        <div class="preview column">
+          <div class="row">
+            <ui-checkbox checked>동의합니다</ui-checkbox>
+            <ui-checkbox indeterminate>부분 선택</ui-checkbox>
+            <ui-checkbox disabled>비활성</ui-checkbox>
+          </div>
+          <div class="row">
+            <ui-radio name="plan" value="free" checked>무료 플랜</ui-radio>
+            <ui-radio name="plan" value="pro">Pro 플랜</ui-radio>
+          </div>
+          <div class="row">
+            <ui-switch checked>알림 수신</ui-switch>
+            <ui-switch>자동 갱신</ui-switch>
+            <ui-switch disabled>잠긴 스위치</ui-switch>
+          </div>
+        </div>
+        <pre class="code">&lt;ui-checkbox checked&gt;동의합니다&lt;/ui-checkbox&gt;
+&lt;ui-radio name="plan" value="pro"&gt;Pro 플랜&lt;/ui-radio&gt;
+&lt;ui-switch checked&gt;알림 수신&lt;/ui-switch&gt;</pre>
+        <p class="props-title">공통 PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>checked</td><td>boolean</td><td>false</td><td>선택 상태</td></tr>
+              <tr><td>disabled</td><td>boolean</td><td>false</td><td>비활성</td></tr>
+              <tr><td>name / value</td><td>string</td><td>''</td><td>폼 제출용 식별</td></tr>
+              <tr><td style="color:var(--ui-color-text-muted)">이벤트</td><td colspan="3">change { checked }</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Alert ============ -->
+      <section class="cat" id="alert" data-crumb="Alert">
+        <h2>Alert <span class="tag">&lt;ui-alert&gt;</span></h2>
+        <p class="desc">정적 안내용. 행동 결과 피드백은 Alert가 아닌 Toast를 사용하세요.</p>
+        <div class="preview column" style="max-width: 560px;">
+          <ui-alert variant="info" title="안내">토큰 변경 없이 라이트/다크가 자동 전환됩니다.</ui-alert>
+          <ui-alert variant="success" title="저장 완료">변경 사항이 저장되었습니다.</ui-alert>
+          <ui-alert variant="warning" title="주의">작성 중인 내용이 사라질 수 있습니다.</ui-alert>
+          <ui-alert variant="error" title="오류" closable>요청이 실패했습니다. 네트워크 상태를 확인하세요.</ui-alert>
+        </div>
+        <pre class="code">&lt;ui-alert variant="error" title="오류" closable&gt;요청 실패…&lt;/ui-alert&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>variant</td><td>info | success | warning | error</td><td>'info'</td><td>톤/색</td></tr>
+              <tr><td>title</td><td>string</td><td>''</td><td>굵은 헤더 텍스트</td></tr>
+              <tr><td>closable</td><td>boolean</td><td>false</td><td>닫기 버튼</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Progress ============ -->
+      <section class="cat" id="progress" data-crumb="Progress">
+        <h2>Progress <span class="tag">&lt;ui-progress&gt;</span></h2>
+        <p class="desc">0~max 값으로 표기. <code>aria-label</code>로 진행 내용을 설명합니다.</p>
+        <div class="preview column" style="max-width: 560px;">
+          <ui-progress value="25" aria-label="업로드"></ui-progress>
+          <ui-progress value="60" variant="success" aria-label="검사"></ui-progress>
+          <ui-progress value="90" variant="warning" aria-label="사용률"></ui-progress>
+        </div>
+        <pre class="code">&lt;ui-progress value="60" variant="success" aria-label="검사"&gt;&lt;/ui-progress&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>value</td><td>number</td><td>0</td><td>현재 값</td></tr>
+              <tr><td>max</td><td>number</td><td>100</td><td>최대 값</td></tr>
+              <tr><td>variant</td><td>primary | success | warning | error</td><td>'primary'</td><td>바 색상</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Skeleton ============ -->
+      <section class="cat" id="skeleton" data-crumb="Skeleton">
+        <h2>Skeleton <span class="tag">&lt;ui-skeleton&gt;</span></h2>
+        <p class="desc">콘텐츠 로딩 Placeholder. shimmer는 <code>prefers-reduced-motion</code>에서 정지됩니다.</p>
+        <div class="preview" style="align-items: flex-start;">
+          <ui-skeleton lines="3" style="flex: 1.6; min-width: 240px;"></ui-skeleton>
+          <ui-skeleton variant="circle"></ui-skeleton>
+          <ui-skeleton variant="rect" width="180px" height="96px"></ui-skeleton>
+        </div>
+        <pre class="code">&lt;ui-skeleton lines="3"&gt;&lt;/ui-skeleton&gt;
+&lt;ui-skeleton variant="circle"&gt;&lt;/ui-skeleton&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>variant</td><td>text | circle | rect</td><td>'text'</td><td>형태</td></tr>
+              <tr><td>lines</td><td>number</td><td>1</td><td>text 다중 줄</td></tr>
+              <tr><td>width / height</td><td>CSS 값</td><td>-</td><td>rect 직접 지정</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Spinner ============ -->
+      <section class="cat" id="spinner" data-crumb="Spinner">
+        <h2>Spinner <span class="tag">&lt;ui-spinner&gt;</span></h2>
+        <p class="desc">버튼/검색 등 즉시 피드백용 회전 인디케이터.</p>
+        <div class="preview">
+          <ui-spinner size="sm"></ui-spinner>
+          <ui-spinner size="md"></ui-spinner>
+          <ui-spinner size="lg"></ui-spinner>
+        </div>
+        <pre class="code">&lt;ui-spinner size="md"&gt;&lt;/ui-spinner&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody><tr><td>size</td><td>'sm' | 'md' | 'lg'</td><td>'md'</td><td>크기 프리셋</td></tr></tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Toast ============ -->
+      <section class="cat" id="toast" data-crumb="Toast">
+        <h2>Toast <span class="tag">&lt;ui-toast&gt;</span></h2>
+        <p class="desc">행동 결과 피드백. 우하단 스택 컨테이너에 담아 쌓습니다. 자동 소멸 + <code>aria-live</code>.</p>
+        <div class="preview">
+          <ui-button size="sm" variant="outline" id="toastInfoBtn">정보</ui-button>
+          <ui-button size="sm" variant="outline" id="toastSuccessBtn">성공</ui-button>
+          <ui-button size="sm" variant="outline" id="toastErrorBtn">에러</ui-button>
+        </div>
+        <pre class="code">// 스택 컨테이너에 동적 생성 → open으로 표시
+const t = document.createElement('ui-toast');
+t.setAttribute('variant', 'success');
+stack.appendChild(t); t.open = true;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>variant</td><td>info | success | warning | error</td><td>'info'</td><td>톤</td></tr>
+              <tr><td>duration</td><td>number(ms)</td><td>4000</td><td>자동 소멸 시간</td></tr>
+              <tr><td>open</td><td>boolean</td><td>false</td><td>표시 상태</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Modal ============ -->
+      <section class="cat" id="modal" data-crumb="Modal">
+        <h2>Modal <span class="tag">&lt;ui-modal&gt;</span></h2>
+        <p class="desc">포커스 트랩 + ESC 탈출 + 백드롭 닫기. 확인 결과는 토스트로 피드백하는 것이 표준입니다.</p>
+        <div class="preview">
+          <ui-button variant="primary" id="openModalBtn">모달 열기</ui-button>
+        </div>
+        <pre class="code">&lt;ui-modal title="테스트 모달"&gt;…&lt;/ui-modal&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>open</td><td>boolean</td><td>false</td><td>열림 상태</td></tr>
+              <tr><td>title</td><td>string</td><td>''</td><td>헤더 타이틀</td></tr>
+              <tr><td style="color:var(--ui-color-text-muted)">이벤트</td><td colspan="3">close</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Drawer ============ -->
+      <section class="cat" id="drawer" data-crumb="Drawer">
+        <h2>Drawer <span class="tag">&lt;ui-drawer&gt;</span></h2>
+        <p class="desc">오프캔버스 사이드 패널. 이 문서의 모바일 목차도 이 컴포넌트입니다.</p>
+        <div class="preview">
+          <ui-button variant="outline" id="openDrawerBtn2">왼쪽 Drawer</ui-button>
+        </div>
+        <pre class="code">&lt;ui-drawer side="right" title="정보"&gt;…&lt;/ui-drawer&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>open</td><td>boolean</td><td>false</td><td>열림 상태</td></tr>
+              <tr><td>side</td><td>'left' | 'right'</td><td>'right'</td><td>등장 방향</td></tr>
+              <tr><td>title</td><td>string</td><td>''</td><td>헤더 타이틀</td></tr>
+              <tr><td style="color:var(--ui-color-text-muted)">이벤트</td><td colspan="3">close</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Dropdown ============ -->
+      <section class="cat" id="dropdown" data-crumb="Dropdown">
+        <h2>Dropdown <span class="tag">&lt;ui-dropdown&gt;</span></h2>
+        <p class="desc"><code>slot="trigger"</code>로 트리거를 지정하고 <code>ui-dropdown-item</code>을 메뉴로 쌓습니다.</p>
+        <div class="preview">
+          <ui-dropdown>
+            <ui-button slot="trigger" size="sm" variant="secondary">메뉴 ▾</ui-button>
+            <ui-dropdown-item value="edit">수정</ui-dropdown-item>
+            <ui-dropdown-item value="duplicate">복제</ui-dropdown-item>
+            <ui-dropdown-item value="delete">삭제</ui-dropdown-item>
+          </ui-dropdown>
+        </div>
+        <pre class="code">&lt;ui-dropdown&gt;
+  &lt;ui-button slot="trigger"&gt;메뉴 ▾&lt;/ui-button&gt;
+  &lt;ui-dropdown-item value="edit"&gt;수정&lt;/ui-dropdown-item&gt;
+&lt;/ui-dropdown&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>placement</td><td>top | bottom | left | right | bottom-start 등</td><td>'bottom'</td><td>메뉴 방향</td></tr>
+              <tr><td>open</td><td>boolean</td><td>false</td><td>제어 상태</td></tr>
+              <tr><td style="color:var(--ui-color-text-muted)">이벤트</td><td colspan="3">open · close</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Tooltip ============ -->
+      <section class="cat" id="tooltip" data-crumb="Tooltip">
+        <h2>Tooltip <span class="tag">&lt;ui-tooltip&gt;</span></h2>
+        <p class="desc">hover/focus 모두 동작 — 키보드 사용자도 도움말을 볼 수 있습니다.</p>
+        <div class="preview">
+          <ui-tooltip content="위쪽 도움말" position="top"><ui-button size="sm" variant="outline">위</ui-button></ui-tooltip>
+          <ui-tooltip content="아래쪽 도움말" position="bottom"><ui-button size="sm" variant="outline">아래</ui-button></ui-tooltip>
+          <ui-tooltip content="오른쪽 도움말" position="right"><ui-button size="sm" variant="outline">오른쪽</ui-button></ui-tooltip>
+        </div>
+        <pre class="code">&lt;ui-tooltip content="도움말" position="top"&gt;
+  &lt;ui-button size="sm"&gt;대상&lt;/ui-button&gt;
+&lt;/ui-tooltip&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>content</td><td>string</td><td>''</td><td>도움말 본문</td></tr>
+              <tr><td>position</td><td>top | bottom | left | right</td><td>'top'</td><td>표시 위치</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Tabs ============ -->
+      <section class="cat" id="tabs" data-crumb="Tabs">
+        <h2>Tabs <span class="tag">&lt;ui-tabs&gt;</span></h2>
+        <p class="desc">활성 탭은 컨테이너의 <code>value</code>가 결정합니다. <code>ui-tab</code>/<code>ui-tab-panel</code>도 같은 value로 연결.</p>
+        <div class="preview column" style="max-width: 560px;">
+          <ui-tabs value="tab2">
+            <div slot="tabs" style="display:flex; gap:4px; margin-bottom:8px;">
+              <ui-tab value="tab1">프로필</ui-tab>
+              <ui-tab value="tab2">보안</ui-tab>
+              <ui-tab value="tab3">알림</ui-tab>
+            </div>
+            <ui-tab-panel value="tab1">계정 프로필 설정 영역</ui-tab-panel>
+            <ui-tab-panel value="tab2">보안 옵션(2단계 인증 등) 설정 영역</ui-tab-panel>
+            <ui-tab-panel value="tab3">알림 수신 정책 설정 영역</ui-tab-panel>
+          </ui-tabs>
+        </div>
+        <pre class="code">&lt;ui-tabs value="tab2"&gt;
+  &lt;div slot="tabs"&gt;&lt;ui-tab value="tab1"&gt;…&lt;/ui-tab&gt;&lt;/div&gt;
+  &lt;ui-tab-panel value="tab1"&gt;…&lt;/ui-tab-panel&gt;
+&lt;/ui-tabs&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>value</td><td>string</td><td>첫 탭</td><td>활성 탭 id</td></tr>
+              <tr><td style="color:var(--ui-color-text-muted)">이벤트</td><td colspan="3">change { value }</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Accordion ============ -->
+      <section class="cat" id="accordion" data-crumb="Accordion">
+        <h2>Accordion <span class="tag">&lt;ui-accordion&gt;</span></h2>
+        <p class="desc"><code>multiple</code>로 다중 열림 허용. 각 항목은 <code>ui-accordion-item</code>.</p>
+        <div class="preview column" style="max-width: 560px;">
+          <ui-accordion>
+            <ui-accordion-item open title="설치 방법">pnpm 설치 후 core 패키지를 import하면 전 컴포넌트와 토큰 정의가 함께 적용됩니다.</ui-accordion-item>
+            <ui-accordion-item title="테마 커스터마이징">토큰 CSS 변수를 덮어쓰면 모든 컴포넌트에 반영됩니다.</ui-accordion-item>
+            <ui-accordion-item title="잠긴 항목" disabled>disabled 항목은 열 수 없습니다.</ui-accordion-item>
+          </ui-accordion>
+        </div>
+        <pre class="code">&lt;ui-accordion&gt;
+  &lt;ui-accordion-item open title="설치 방법"&gt;…&lt;/ui-accordion-item&gt;
+  &lt;ui-accordion-item title="테마"&gt;…&lt;/ui-accordion-item&gt;
+&lt;/ui-accordion&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>multiple</td><td>boolean</td><td>false</td><td>다중 열림 허용</td></tr>
+              <tr><td style="color:var(--ui-color-text-muted)">item 속성</td><td colspan="3">open · title · disabled</td></tr>
+              <tr><td style="color:var(--ui-color-text-muted)">이벤트</td><td colspan="3">change { open }</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Pagination ============ -->
+      <section class="cat" id="pagination" data-crumb="Pagination">
+        <h2>Pagination <span class="tag">&lt;ui-pagination&gt;</span></h2>
+        <p class="desc">total/page-size로 페이지 수 계산, 현재 페이지에 primary 강조.</p>
+        <div class="preview">
+          <ui-pagination current="3" total="100" page-size="10"></ui-pagination>
+        </div>
+        <pre class="code">&lt;ui-pagination current="3" total="100" page-size="10"&gt;&lt;/ui-pagination&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>current</td><td>number</td><td>1</td><td>현재 페이지</td></tr>
+              <tr><td>total</td><td>number</td><td>0</td><td>전체 항목 수</td></tr>
+              <tr><td>page-size</td><td>number</td><td>10</td><td>페이지당 항목 수</td></tr>
+              <tr><td style="color:var(--ui-color-text-muted)">이벤트</td><td colspan="3">change { page }</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Breadcrumbs ============ -->
+      <section class="cat" id="breadcrumbs" data-crumb="Breadcrumbs">
+        <h2>Breadcrumbs <span class="tag">&lt;ui-breadcrumbs&gt;</span></h2>
+        <p class="desc">현재 위치는 <code>current</code> 속성으로 표시합니다.</p>
+        <div class="preview">
+          <ui-breadcrumbs aria-label="경로">
+            <ui-breadcrumb-item href="/">홈</ui-breadcrumb-item>
+            <ui-breadcrumb-item href="/docs">문서</ui-breadcrumb-item>
+            <ui-breadcrumb-item current>컴포넌트</ui-breadcrumb-item>
+          </ui-breadcrumbs>
+        </div>
+        <pre class="code">&lt;ui-breadcrumbs&gt;
+  &lt;ui-breadcrumb-item href="/"&gt;홈&lt;/ui-breadcrumb-item&gt;
+  &lt;ui-breadcrumb-item current&gt;컴포넌트&lt;/ui-breadcrumb-item&gt;
+&lt;/ui-breadcrumbs&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>separator</td><td>string</td><td>'/'</td><td>구분 기호</td></tr>
+              <tr><td style="color:var(--ui-color-text-muted)">item 속성</td><td colspan="3">href · current</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Navbar ============ -->
+      <section class="cat" id="navbar" data-crumb="Navbar">
+        <h2>Navbar <span class="tag">&lt;ui-navbar&gt;</span></h2>
+        <p class="desc">브랜드 + 링크 + 액션 슬롯. 이 페이지 상단에 실제로 사용 중입니다. <code>sticky</code>로 고정.</p>
+        <div class="preview column">
+          <ui-navbar brand="My App">
+            <a href="#top">홈</a>
+            <a href="#table">데이터</a>
+            <a href="#tabs">설정</a>
+            <div slot="actions"><ui-button size="sm" variant="primary">로그인</ui-button></div>
+          </ui-navbar>
+        </div>
+        <pre class="code">&lt;ui-navbar brand="My App" sticky&gt;
+  &lt;a href="/"&gt;홈&lt;/a&gt;
+  &lt;div slot="actions"&gt;&lt;ui-button size="sm"&gt;로그인&lt;/ui-button&gt;&lt;/div&gt;
+&lt;/ui-navbar&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>brand</td><td>string</td><td>''</td><td>좌측 브랜드 텍스트</td></tr>
+              <tr><td>sticky</td><td>boolean</td><td>false</td><td>상단 고정</td></tr>
+              <tr><td style="color:var(--ui-color-text-muted)">슬롯</td><td colspan="3">(default) 링크 · actions 우측 액션</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ Log ============ -->
+      <section class="cat" id="log" data-crumb="Log">
+        <h2>Log <span class="tag">&lt;ui-log&gt;</span></h2>
+        <p class="desc">서버 로그·작업 이력 같은 <strong>계속 늘어나는 장문 텍스트</strong>의 표준 뷰어. <code>role="log"</code> + <code>aria-live</code> 내장, 자동 스크롤(사용자가 위로 읽다가 새 항목이 오면 밀어내지 않음), 오래된 항목 자동 정리, 전체 복사 버튼이 표준입니다. 흔한 <code>&lt;pre&gt;</code> 낙서 대신 이 컴포넌트를 쓰면 레벨 색·타임스탬프·빈 상태가 한결같이 유지됩니다.</p>
+
+        <div class="preview column" style="max-width: 720px;">
+          <ui-log label="gateway.log" height="240px">
+            <ui-log-item level="info" time="19:31:02">GET /healthz — 204 · 3ms</ui-log-item>
+            <ui-log-item level="success" time="19:31:04">music.local 배포 완료 (v2.4.1)</ui-log-item>
+            <ui-log-item level="warning" time="19:32:41">디스크 사용률 82% — 임계치(80%) 초과</ui-log-item>
+            <ui-log-item level="error" time="19:33:12">SSH 원격 점검 실패 — Windows 경로 파싱 오류</ui-log-item>
+            <ui-log-item level="debug" time="19:33:15">retry scheduled: 지수 백오프 2^3s · attempts=3</ui-log-item>
+          </ui-log>
+        </div>
+        <pre class="code">&lt;ui-log label="gateway.log" height="240px"&gt;
+  &lt;ui-log-item level="info" time="19:31:02"&gt;GET /healthz — 204 · 3ms&lt;/ui-log-item&gt;
+  &lt;ui-log-item level="error" time="19:33:12"&gt;SSH 점검 실패…&lt;/ui-log-item&gt;
+&lt;/ui-log&gt;</pre>
+
+        <div class="preview column" style="max-width: 720px;">
+          <ui-log id="streamLog" label="실시간 스트림 (max 8)" height="170px" wrap max="8"></ui-log>
+          <div class="row">
+            <ui-button size="sm" variant="primary" id="logPushBtn">항목 1건 추가</ui-button>
+            <ui-button size="sm" variant="outline" id="logClearBtn">비우기</ui-button>
+            <span class="hint" style="margin: 0;">push() API + 자동 정리 + 스티키 바텀 시연</span>
+          </div>
+        </div>
+
+        <p class="props-title">PROPS — ui-log</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>label</td><td>string</td><td>''</td><td>헤더 라벨 + aria-label</td></tr>
+              <tr><td>height</td><td>CSS 값</td><td>220px</td><td>스크롤 영역 높이</td></tr>
+              <tr><td>wrap</td><td>boolean</td><td>false</td><td>긴 문장 줄바꿈(기본은 가로 스크롤)</td></tr>
+              <tr><td>auto-scroll</td><td>boolean</td><td>true</td><td>새 항목 시 아래로 스크롤</td></tr>
+              <tr><td>max</td><td>number</td><td>500</td><td>초과 시 오래된 항목 제거</td></tr>
+              <tr><td>empty</td><td>string</td><td>'표시할 항목…'</td><td>빈 상태 문구</td></tr>
+              <tr><td style="color:var(--ui-color-text-muted)">이벤트</td><td colspan="3">copy { text }</td></tr>
+              <tr><td style="color:var(--ui-color-text-muted)">API</td><td colspan="3">push(level, msg, time?) · scrollDown() · clear()</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+
+        <p class="props-title">PROPS — ui-log-item</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>level</td><td>info | success | warning | error | debug</td><td>'info'</td><td>마커/텍스트 색</td></tr>
+              <tr><td>time</td><td>string</td><td>''</td><td>타임스탬프 표시(생략 가능)</td></tr>
+            </tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ UX Patterns ============ -->
+      <section class="cat" id="patterns" data-crumb="UX 패턴">
+        <h2>UX Patterns (표준 조합 패턴)</h2>
+        <p class="hint">실서비스 감사에서 발견된 문제 유형을 컴포넌트 조합 패턴으로 표준화했습니다.</p>
+        <div class="pattern-grid">
+          <ui-card bordered>
+            <div slot="header">A. 검색 상태 (로딩 / 결과 / 빈 결과 / 에러)</div>
+            <div class="row">
+              <ui-input id="searchInput" placeholder="검색어 (예: drawer, fail, 없음)" style="flex:1; min-width:160px;" aria-label="검색어"></ui-input>
+              <ui-button id="searchBtn" size="sm" variant="primary">검색</ui-button>
+            </div>
+            <div class="result-box" id="searchResults" aria-live="polite"></div>
+          </ui-card>
+
+          <ui-card bordered>
+            <div slot="header">B. 버튼 잠금 (중복 클릭 방지 + 재시도)</div>
+            <div class="state-panel">
+              <ui-button id="taskBtn" variant="primary">작업 실행</ui-button>
+              <ui-button id="flakyBtn" variant="danger" size="sm">불안정한 작업 실행</ui-button>
+              <p class="hint">처리 중 <code>disabled</code> + "처리 중...". 실패 후 "다시 시도" 라벨로 복귀.</p>
+            </div>
+          </ui-card>
+
+          <ui-card bordered>
+            <div slot="header">C. 실시간 상태 칩 (서버 상태 동기화)</div>
+            <div class="state-panel">
+              <div class="row">
+                <ui-badge id="serverStateChip" variant="outline">대기 중</ui-badge>
+                <ui-spinner size="sm" id="stateSpinner" style="visibility: hidden;"></ui-spinner>
+              </div>
+              <p class="hint">마지막 확인: <span id="stateUpdated">—</span></p>
+              <p class="hint">상태는 실제 값만 표시합니다(거짓 고정 표시 금지).</p>
+            </div>
+          </ui-card>
+        </div>
+      </section>
+
+
+      <!-- ============ v1.1: Textarea ============ -->
+      <section class="cat" id="textarea" data-crumb="Textarea">
+        <h2>Textarea <span class="tag">&lt;ui-textarea&gt;</span></h2>
+        <p class="desc">여러 줄 입력. <code>maxlength</code>를 주면 글자 수가 표시되고, <code>&lt;form&gt;</code>에 참여해 <code>name</code>으로 제출·reset·fieldset disabled가 동작합니다.</p>
+        <div class="preview column" style="max-width: 520px;">
+          <ui-textarea name="memo" rows="4" maxlength="120" placeholder="메모를 입력하세요" aria-label="메모"></ui-textarea>
+          <ui-textarea invalid rows="2" value="오류 상태 예시" aria-label="오류 예시"></ui-textarea>
+          <ui-textarea disabled rows="2" value="비활성" aria-label="비활성 예시"></ui-textarea>
+        </div>
+        <pre class="code">&lt;ui-textarea name="memo" rows="4" maxlength="120" placeholder="메모"&gt;&lt;/ui-textarea&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody><tr><td>value / rows / maxlength</td><td>string / number</td><td>'' / 3 / -</td><td>값, 표시 줄 수, 최대 글자 수(카운터 표시)</td></tr><tr><td>resize / size</td><td>none|vertical|both / sm|md|lg</td><td>vertical / md</td><td>크기 조절·크기</td></tr><tr><td>disabled / readonly / invalid</td><td>boolean</td><td>false</td><td>상태</td></tr><tr><td>name</td><td>string</td><td>-</td><td>폼 제출 이름</td></tr><tr><td>이벤트</td><td></td><td></td><td>input / change { value }</td></tr></tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ v1.1: Segmented ============ -->
+      <section class="cat" id="segmented" data-crumb="Segmented">
+        <h2>Segmented <span class="tag">&lt;ui-segmented&gt;</span></h2>
+        <p class="desc">상호 배타적 선택 그룹(보기 전환·필터). 화살표/Home/End로 이동하면 바로 선택되며 <code>change</code>가 발화됩니다. (<code>role="radiogroup"</code>)</p>
+        <div class="preview">
+          <ui-segmented id="segDemo" value="list" aria-label="보기 방식">
+            <ui-segment value="list">목록</ui-segment>
+            <ui-segment value="grid">격자</ui-segment>
+            <ui-segment value="map" disabled>지도</ui-segment>
+          </ui-segmented>
+          <span class="hint" id="segOut">선택: list</span>
+        </div>
+        <pre class="code">&lt;ui-segmented value="list" aria-label="보기 방식"&gt;
+  &lt;ui-segment value="list"&gt;목록&lt;/ui-segment&gt;
+  &lt;ui-segment value="grid"&gt;격자&lt;/ui-segment&gt;
+&lt;/ui-segmented&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody><tr><td>value</td><td>string</td><td>''</td><td>선택된 ui-segment의 value</td></tr><tr><td>size / disabled</td><td>sm|md|lg / boolean</td><td>md / false</td><td>크기, 전체 비활성</td></tr><tr><td>segment 속성</td><td></td><td></td><td>value · disabled</td></tr><tr><td>이벤트</td><td></td><td></td><td>change { value }</td></tr></tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ v1.1: Stepper ============ -->
+      <section class="cat" id="stepper" data-crumb="Stepper">
+        <h2>Stepper <span class="tag">&lt;ui-stepper&gt;</span></h2>
+        <p class="desc"><code>current</code>(0부터) 앞은 완료, 현재는 진행 중, 뒤는 대기. 단계에 <code>status="error"</code>를 주면 오류로 표시합니다.</p>
+        <div class="preview column" style="max-width: 640px;">
+          <ui-stepper id="stepDemo" current="1" aria-label="설정 단계">
+            <ui-step label="계정" description="이메일 입력"></ui-step>
+            <ui-step label="서버" description="IMAP / SMTP"></ui-step>
+            <ui-step label="확인"></ui-step>
+            <ui-step label="완료"></ui-step>
+          </ui-stepper>
+          <div style="display:flex; gap:8px;">
+            <ui-button size="sm" variant="outline" id="stepPrev">이전</ui-button>
+            <ui-button size="sm" variant="primary" id="stepNext">다음</ui-button>
+          </div>
+          <ui-stepper current="2" orientation="vertical" aria-label="세로 예시">
+            <ui-step label="코드 작성" description="완료"></ui-step>
+            <ui-step label="빌드" status="error" description="타입 오류"></ui-step>
+            <ui-step label="배포"></ui-step>
+          </ui-stepper>
+        </div>
+        <pre class="code">&lt;ui-stepper current="1"&gt;
+  &lt;ui-step label="계정" description="이메일 입력"&gt;&lt;/ui-step&gt;
+  &lt;ui-step label="서버"&gt;&lt;/ui-step&gt;
+&lt;/ui-stepper&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody><tr><td>current</td><td>number</td><td>0</td><td>진행 중인 단계(0부터)</td></tr><tr><td>orientation</td><td>horizontal|vertical</td><td>horizontal</td><td>배치</td></tr><tr><td>step 속성</td><td></td><td></td><td>label · description · status="error"</td></tr><tr><td>접근성</td><td></td><td></td><td>role=list/listitem, 현재 단계 aria-current="step"</td></tr></tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ v1.1: Chip ============ -->
+      <section class="cat" id="chip" data-crumb="Chip">
+        <h2>Chip <span class="tag">&lt;ui-chip&gt;</span></h2>
+        <p class="desc">라벨·태그. <code>removable</code>이면 × 버튼과 Delete/Backspace로 <code>remove</code> 이벤트를 발화합니다. 칩을 자동으로 지우지는 않으므로 앱이 목록 상태를 갱신하세요.</p>
+        <div class="preview" id="chipBox">
+          <ui-chip variant="primary" removable>작업</ui-chip>
+          <ui-chip variant="success" removable>개인</ui-chip>
+          <ui-chip variant="warning" removable>검토</ui-chip>
+          <ui-chip variant="error" removable>긴급</ui-chip>
+          <ui-chip size="sm">읽기 전용</ui-chip>
+          <ui-chip removable disabled>비활성</ui-chip>
+        </div>
+        <pre class="code">&lt;ui-chip variant="primary" removable&gt;작업&lt;/ui-chip&gt;
+chip.addEventListener('remove', () =&gt; { /* 상태에서 제거 */ });</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody><tr><td>variant</td><td>neutral|primary|success|warning|error</td><td>neutral</td><td>색상</td></tr><tr><td>size</td><td>sm|md</td><td>md</td><td>크기</td></tr><tr><td>removable / disabled</td><td>boolean</td><td>false</td><td>삭제 버튼·비활성</td></tr><tr><td>remove-label</td><td>string</td><td>Remove</td><td>삭제 버튼 접근성 이름</td></tr><tr><td>이벤트</td><td></td><td></td><td>remove (자동 삭제 없음)</td></tr></tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <!-- ============ v1.1: Empty State ============ -->
+      <section class="cat" id="empty-state" data-crumb="Empty State">
+        <h2>Empty State <span class="tag">&lt;ui-empty-state&gt;</span></h2>
+        <p class="desc">빈 목록·검색 결과 없음·오류 안내. 기본 슬롯에 다음 행동 버튼, <code>slot="icon"</code>에 아이콘을 넣습니다. 검색 4상태 패턴(7.1)의 "빈 결과"에 사용하세요.</p>
+        <div class="preview column" style="max-width: 560px;">
+          <ui-empty-state heading="결과가 없습니다" description="다른 검색어로 다시 시도해 보세요.">
+            <span slot="icon">&#128269;</span>
+            <ui-button size="sm" variant="outline">검색어 지우기</ui-button>
+          </ui-empty-state>
+          <ui-empty-state size="sm" variant="error" heading="불러오지 못했습니다" description="네트워크를 확인한 뒤 다시 시도하세요."></ui-empty-state>
+        </div>
+        <pre class="code">&lt;ui-empty-state heading="결과가 없습니다" description="다른 검색어로 다시 시도"&gt;
+  &lt;span slot="icon"&gt;🔍&lt;/span&gt;
+  &lt;ui-button&gt;검색어 지우기&lt;/ui-button&gt;
+&lt;/ui-empty-state&gt;</pre>
+        <p class="props-title">PROPS</p>
+        <ui-table striped hoverable>
+          <template>
+            <thead><tr><th>속성</th><th>타입</th><th>기본값</th><th>설명</th></tr></thead>
+            <tbody><tr><td>heading / description</td><td>string</td><td>''</td><td>제목·설명</td></tr><tr><td>size / variant</td><td>sm|md / default|error</td><td>md / default</td><td>크기·오류 스타일</td></tr><tr><td>슬롯</td><td></td><td></td><td>icon, 기본 슬롯(행동 버튼)</td></tr></tbody>
+          </template>
+        </ui-table>
+      </section>
+
+      <footer class="end">
+        Cubit UI v1.1 · 30 components · Vanilla / React / Svelte · token-based theming · WCAG 2.1 AA
+      </footer>
+    </div>
+  </div>
+
+  <!-- Overlays -->
+  <ui-modal id="demoModal" title="테스트 모달">
+    <p>포커스 트랩과 ESC 탈출이 적용된 표준 모달. 확인 시 토스트로 결과를 피드백합니다.</p>
+    <div slot="footer">
+      <ui-button variant="outline" id="closeModalBtn">닫기</ui-button>
+      <ui-button variant="primary" id="confirmModalBtn">확인</ui-button>
+    </div>
+  </ui-modal>
+
+  <ui-drawer id="navDrawer" side="left" title="컴포넌트 목차">
+    <div id="navDrawerBody"></div>
+  </ui-drawer>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <script type="module" src="./main.ts"></script>
+</body>
+</html>
