@@ -357,14 +357,18 @@ log.clear();                                       // 전체 비우기
 
 ## 라이선스 / License
 
-Cubit UI는 **TLL-BY-NC-ND** ([Tsuel Liberty License](https://tll.mataku.org))로 제공됩니다. 전문은 [`LICENSE`](./LICENSE)를 보세요.
+Cubit UI는 **TLL-BY-NC-ND** ([Tsuel Liberty License](https://tll.mataku.org))로 제공됩니다. 한국어 문구가 기준이며, 다른 언어와 다르면 한국어가 우선합니다.
+
+- 라이선스 전문: [`LICENSE`](./LICENSE)
+- [라이선스 상세 링크 (쉬운 설명·조건 확인)](https://tll.mataku.org/?lang=ko#/detail?by=1&attr=tsuel%28%40tsuel-dev%29&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=RU%2CCN%2CKP&ad=none&ai=deny)
+- TLL 소개 및 생성기: <https://tll.mataku.org>
 
 | 조건 | 내용 |
 |---|---|
-| BY | 저작자 `Tsuel (tsuel-dev)`를 이름 + 링크로 표시해야 합니다 |
+| BY | 저작자 `tsuel(@tsuel-dev)`를 **저작물 제목 + 이름 + 링크**로 표시해야 합니다 |
 | NC | 영리 목적 이용 금지 |
 | ND | 수정·2차 저작물 제작 금지 |
-| 지역 | 북한·중국·러시아에서는 이용 제한 |
+| 지역 | 러시아·중국·북한에서는 이용 금지 |
 | AI | 인공지능·기계학습 모델의 학습 데이터로 사용 금지 |
 
 - 이 라이선스는 크리에이티브 커먼즈 라이선스가 **아니며**, 오픈소스(OSI) 정의를 충족하지 않습니다.

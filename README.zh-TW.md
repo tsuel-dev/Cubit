@@ -357,14 +357,18 @@ log.clear();                                           // clear everything
 
 ## 授權條款 / License
 
-Cubit UI 以 **TLL-BY-NC-ND**([Tsuel Liberty License](https://tll.mataku.org))提供。完整內容請見 [`LICENSE`](./LICENSE)。以韓文文本為準,如與其他語言不一致,以韓文文本為準。
+Cubit UI 以 **TLL-BY-NC-ND**([Tsuel Liberty License](https://tll.mataku.org))提供。以韓文文本為準,如與其他語言不一致,以韓文文本為準。
+
+- 授權條款全文: [`LICENSE`](./LICENSE)
+- [授權條款詳情連結(通俗說明、條件查看;頁面為簡體中文)](https://tll.mataku.org/?lang=zh-CN#/detail?by=1&attr=tsuel%28%40tsuel-dev%29&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=RU%2CCN%2CKP&ad=none&ai=deny&lang=zh-CN)
+- TLL 介紹與產生器: <https://tll.mataku.org>
 
 | 條件 | 內容 |
 |---|---|
-| BY | 須以姓名+連結方式標示作者 `Tsuel (tsuel-dev)` |
+| BY | 須以 **作品標題 + 姓名 + 連結** 的方式標示作者 `tsuel(@tsuel-dev)` |
 | NC | 禁止商業用途 |
 | ND | 禁止修改及製作衍生作品 |
-| 地區 | 在北韓、中國與俄羅斯限制使用 |
+| 地區 | 在俄羅斯、中國與北韓禁止使用 |
 | AI | 禁止作為 AI/機器學習模型的訓練資料 |
 
 - 本授權**不是**創用 CC(Creative Commons)授權,也不符合開放原始碼(OSI)定義。

@@ -357,14 +357,18 @@ log.clear();                                           // clear everything
 
 ## ライセンス / License
 
-Cubit UI は **TLL-BY-NC-ND**([Tsuel Liberty License](https://tll.mataku.org))で提供されます。全文は [`LICENSE`](./LICENSE) をご覧ください。韓国語の文言が基準であり、他の言語と異なる場合は韓国語が優先されます。
+Cubit UI は **TLL-BY-NC-ND**([Tsuel Liberty License](https://tll.mataku.org))で提供されます。韓国語の文言が基準であり、他の言語と異なる場合は韓国語が優先されます。
+
+- ライセンス全文: [`LICENSE`](./LICENSE)
+- [ライセンス詳細リンク(やさしい説明・条件の確認)](https://tll.mataku.org/?lang=ja#/detail?by=1&attr=tsuel%28%40tsuel-dev%29&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=RU%2CCN%2CKP&ad=none&ai=deny&lang=ja)
+- TLL の紹介とジェネレーター: <https://tll.mataku.org>
 
 | 条件 | 内容 |
 |---|---|
-| BY | 著作者 `Tsuel (tsuel-dev)` を名前+リンクで表示すること |
+| BY | 著作者 `tsuel(@tsuel-dev)` を **作品タイトル + 名前 + リンク** で表示すること |
 | NC | 営利目的での利用は禁止 |
 | ND | 改変・二次的著作物の作成は禁止 |
-| 地域 | 北朝鮮・中国・ロシアでの利用は制限 |
+| 地域 | ロシア・中国・北朝鮮での利用は禁止 |
 | AI | AI・機械学習モデルの学習データとしての利用は禁止 |
 
 - これはクリエイティブ・コモンズ・ライセンスでは**なく**、オープンソース(OSI)の定義も満たしません。
