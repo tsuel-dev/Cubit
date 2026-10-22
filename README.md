@@ -360,7 +360,7 @@ log.clear();                                       // 전체 비우기
 Cubit UI는 **TLL-BY-NC-ND** ([Tsuel Liberty License](https://tll.mataku.org))로 제공됩니다. 한국어 문구가 기준이며, 다른 언어와 다르면 한국어가 우선합니다.
 
 - 라이선스 전문: [`LICENSE`](./LICENSE)
-- [라이선스 상세 링크 (쉬운 설명·조건 확인)](https://tll.mataku.org/?lang=ko#/detail?by=1&attr=tsuel%28%40tsuel-dev%29&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=RU%2CCN%2CKP&ad=none&ai=deny)
+- [라이선스 상세 링크 (쉬운 설명·조건 확인)](https://tll.mataku.org/?lang=ko#/detail?by=1&attr=tsuel%28%40tsuel-dev%29&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=RU%2CCN%2CKP&ad=none&ai=deny&fp=6E4B95B8BB)
 - TLL 소개 및 생성기: <https://tll.mataku.org>
 
 | 조건 | 내용 |

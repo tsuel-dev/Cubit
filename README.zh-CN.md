@@ -360,7 +360,7 @@ log.clear();                                           // clear everything
 Cubit UI 以 **TLL-BY-NC-ND**([Tsuel Liberty License](https://tll.mataku.org))提供。以韩语文本为准,如与其他语言不一致,以韩语文本为准。
 
 - 许可证全文: [`LICENSE`](./LICENSE)
-- [许可证详情链接(通俗说明、条件查看)](https://tll.mataku.org/?lang=zh-CN#/detail?by=1&attr=tsuel%28%40tsuel-dev%29&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=RU%2CCN%2CKP&ad=none&ai=deny&lang=zh-CN)
+- [许可证详情链接(通俗说明、条件查看)](https://tll.mataku.org/?lang=zh-CN#/detail?by=1&attr=tsuel%28%40tsuel-dev%29&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=RU%2CCN%2CKP&ad=none&ai=deny&lang=zh-CN&fp=6E4B95B8BB)
 - TLL 介绍与生成器: <https://tll.mataku.org>
 
 | 条件 | 含义 |

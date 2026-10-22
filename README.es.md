@@ -360,7 +360,7 @@ log.clear();                                           // clear everything
 Cubit UI se ofrece bajo **TLL-BY-NC-ND** ([Tsuel Liberty License](https://tll.mataku.org)). El texto en coreano es la referencia; si otro idioma difiere, prevalece el texto en coreano.
 
 - Texto completo de la licencia: [`LICENSE`](./LICENSE)
-- [Enlace de detalles de la licencia (explicación sencilla y condiciones)](https://tll.mataku.org/?lang=es#/detail?by=1&attr=tsuel%28%40tsuel-dev%29&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=RU%2CCN%2CKP&ad=none&ai=deny&lang=es)
+- [Enlace de detalles de la licencia (explicación sencilla y condiciones)](https://tll.mataku.org/?lang=es#/detail?by=1&attr=tsuel%28%40tsuel-dev%29&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=RU%2CCN%2CKP&ad=none&ai=deny&lang=es&fp=6E4B95B8BB)
 - Acerca de TLL y el generador: <https://tll.mataku.org>
 
 | Condición | Significado |
