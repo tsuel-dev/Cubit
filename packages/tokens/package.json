@@ -1,6 +1,6 @@
 {
   "name": "@cubit-ui/tokens",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Design tokens and CSS custom properties generator for Cubit UI",
   "license": "SEE LICENSE IN LICENSE",
   "repository": {

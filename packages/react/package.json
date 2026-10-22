@@ -1,6 +1,6 @@
 {
   "name": "@cubit-ui/react",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "React framework wrapper for Cubit UI Web Components",
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
