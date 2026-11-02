@@ -34,6 +34,8 @@ export function createComponent<P extends Record<string, any>, E extends HTMLEle
           // 컴포넌트 고유 이벤트(change/close/open/…)는 자식 컴포넌트에서도 버블링되어 올라온다.
           // 예: <Tabs> 안의 <Pagination> 의 change 가 Tabs 의 onChange 로 새지 않도록 자기 자신이 발화한 이벤트만 처리한다.
           if (mappedEvent && event.target !== el) return;
+          // 브라우저 기본 이벤트(예: shadow 에서 새어 나온 composed input)는 detail 이 없다. 컴포넌트가 낸 CustomEvent 만 처리한다.
+          if (mappedEvent && !(event instanceof CustomEvent)) return;
           const customEvent = event as CustomEvent;
           handler(customEvent.detail !== undefined ? customEvent.detail : event);
         };

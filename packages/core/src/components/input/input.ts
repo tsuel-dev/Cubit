@@ -5,7 +5,10 @@ export class UIInput extends UIElement {
   private defaultValue = '';
 
   static get observedAttributes(): string[] {
-    return ['value', 'placeholder', 'type', 'disabled', 'readonly', 'size', 'invalid', 'aria-label'];
+    return [
+      'value', 'placeholder', 'type', 'disabled', 'readonly', 'size', 'invalid', 'aria-label',
+      'autocomplete', 'inputmode', 'enterkeyhint', 'maxlength', 'minlength', 'required', 'pattern', 'min', 'max', 'step',
+    ];
   }
 
   get value(): string {
@@ -35,6 +38,75 @@ export class UIInput extends UIElement {
     this.setBooleanAttr('invalid', val);
   }
 
+  /** 내부 input 에 그대로 전달하는 선택 속성(없으면 제거). 폼 제출·비밀번호 관리자·모바일 키보드에 필요하다. */
+  private static readonly PASSTHROUGH = [
+    'autocomplete', 'inputmode', 'enterkeyhint', 'maxlength', 'minlength', 'pattern', 'min', 'max', 'step',
+  ] as const;
+
+  /**
+   * 속성 변경을 내부 요소에 제자리 반영한다. 전체 재렌더는 input 을 교체해 포커스·IME 조합을 끊으므로 피한다.
+   * 반영할 수 없으면(아직 렌더 전) false.
+   */
+  private syncInPlace(name: string): boolean {
+    const input = this.root.querySelector('input');
+    const wrapper = this.root.querySelector('.wrapper');
+    if (!input || !wrapper) return false;
+    switch (name) {
+      case 'placeholder': input.placeholder = this.getAttribute('placeholder') || ''; break;
+      case 'type': input.type = this.getAttribute('type') || 'text'; break;
+      case 'readonly': input.readOnly = this.hasAttribute('readonly'); break;
+      case 'required': input.required = this.hasAttribute('required'); break;
+      case 'disabled':
+        input.disabled = this.disabled;
+        wrapper.classList.toggle('disabled', this.disabled);
+        if (this.disabled) input.setAttribute('aria-disabled', 'true'); else input.removeAttribute('aria-disabled');
+        break;
+      case 'invalid':
+        wrapper.classList.toggle('invalid', this.invalid);
+        input.setAttribute('aria-invalid', this.invalid ? 'true' : 'false');
+        break;
+      case 'aria-label': {
+        const label = this.getAttribute('aria-label');
+        if (label) input.setAttribute('aria-label', label); else input.removeAttribute('aria-label');
+        break;
+      }
+      case 'size': {
+        const size = this.getAttribute('size') || 'md';
+        wrapper.classList.remove('sm', 'md', 'lg');
+        wrapper.classList.add(['sm', 'md', 'lg'].includes(size) ? size : 'md');
+        break;
+      }
+      default: {
+        if (!(UIInput.PASSTHROUGH as readonly string[]).includes(name)) return false;
+        const value = this.getAttribute(name);
+        if (value === null) input.removeAttribute(name); else input.setAttribute(name, value);
+      }
+    }
+    this.updateValidity();
+    return true;
+  }
+
+  /** 내부 input 의 제약 검증(required/pattern/maxlength 등) 결과를 폼 검증에 연결한다. */
+  private updateValidity(): void {
+    const input = this.root.querySelector('input');
+    if (!this.internals || !input) return;
+    if (input.validity.valid) {
+      this.internals.setValidity({});
+    } else {
+      // ValidityState 는 열거 가능한 속성이 아니라 플래그를 직접 복사한다.
+      const v = input.validity;
+      this.internals.setValidity(
+        {
+          valueMissing: v.valueMissing, typeMismatch: v.typeMismatch, patternMismatch: v.patternMismatch,
+          tooLong: v.tooLong, tooShort: v.tooShort, rangeUnderflow: v.rangeUnderflow, rangeOverflow: v.rangeOverflow,
+          stepMismatch: v.stepMismatch, badInput: v.badInput,
+        },
+        input.validationMessage,
+        input,
+      );
+    }
+  }
+
   /**
    * value 속성 변경은 내부 input 값을 제자리 갱신한다.
    * 전체 재렌더를 하면 input 요소가 교체되어 포커스·캐릿이 사라진다.
@@ -57,9 +129,11 @@ export class UIInput extends UIElement {
             try { input.setSelectionRange(start, end); } catch { /* type=number 등 */ }
           }
         }
+        this.updateValidity();
         return;
       }
     }
+    if (oldValue !== newValue && name !== 'value' && this.syncInPlace(name)) return;
     super.attributeChangedCallback(name, oldValue, newValue);
   }
 
@@ -81,6 +155,11 @@ export class UIInput extends UIElement {
     const readonly = this.hasAttribute('readonly');
     const invalid = this.invalid;
     const ariaLabel = this.getAttribute('aria-label') || '';
+    const required = this.hasAttribute('required');
+    const extra = UIInput.PASSTHROUGH
+      .filter((name) => this.hasAttribute(name))
+      .map((name) => `${name}="${this.escapeHtml(this.getAttribute(name))}"`)
+      .join(' ');
     const currentVal = this.getAttribute('value') || '';
     this.setFormValue(currentVal);
 
@@ -159,6 +238,8 @@ export class UIInput extends UIElement {
           value="${this.escapeHtml(currentVal)}"
           ${disabled ? 'disabled' : ''}
           ${readonly ? 'readonly' : ''}
+          ${required ? 'required' : ''}
+          ${extra}
           ${disabled ? 'aria-disabled="true"' : ''}
           ${invalid ? 'aria-invalid="true"' : 'aria-invalid="false"'}
           ${ariaLabel ? `aria-label="${this.escapeHtml(ariaLabel)}"` : ''}
@@ -169,13 +250,24 @@ export class UIInput extends UIElement {
     const input = this.root.querySelector('input');
     const wrapper = this.root.querySelector('.wrapper');
 
+    this.updateValidity();
     if (input && wrapper) {
       input.onfocus = () => wrapper.classList.add('focused');
       input.onblur = () => wrapper.classList.remove('focused');
       input.oninput = (e) => {
+        // 브라우저 기본 input 이벤트는 composed 라 shadow 밖으로 새어 나간다. 그러면 호스트에서 detail 없는 날 이벤트가
+        // 한 번 더 도착해 래퍼(React/Svelte)가 {value} 대신 Event 를 받는다. 아래 emit 한 번만 내보낸다.
+        e.stopPropagation();
         const val = (e.target as HTMLInputElement).value;
         this.setAttribute('value', val);
+        this.updateValidity();
         this.emit('input', { value: val });
+      };
+      // Enter 암묵 제출: IME 조합 중이거나 이미 처리된 키는 제외한다.
+      input.onkeydown = (e) => {
+        if (e.key !== 'Enter' || e.isComposing || e.defaultPrevented || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey) return;
+        if (this.disabled || this.hasAttribute('readonly')) return;
+        this.requestFormSubmit();
       };
       input.onchange = (e) => {
         const val = (e.target as HTMLInputElement).value;

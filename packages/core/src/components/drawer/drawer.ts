@@ -1,4 +1,5 @@
 import { UIElement } from '../../base/ui-element';
+import { FocusTrap, ScrollLock } from '../../base/focus-trap';
 
 /**
  * <ui-drawer> — Offcanvas 사이드 패널
@@ -43,6 +44,32 @@ export class UIDrawer extends UIElement {
 
   override set title(val: string) {
     this.setAttribute('title', val);
+  }
+
+  private focusTrap: FocusTrap | null = null;
+  private scrollLock = new ScrollLock();
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.focusTrap?.deactivate(false);
+    this.scrollLock.unlock();
+  }
+
+  override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    super.attributeChangedCallback(name, oldValue, newValue);
+    if (name !== 'open' || oldValue === newValue) return;
+    if (this.open) {
+      this.scrollLock.lock();
+      // 렌더가 끝난 뒤 패널 안으로 포커스를 옮기고 가둔다.
+      setTimeout(() => {
+        if (!this.open || !this.isConnected) return;
+        this.focusTrap ??= new FocusTrap(this.root);
+        this.focusTrap.activate();
+      }, 0);
+    } else {
+      this.focusTrap?.deactivate();
+      this.scrollLock.unlock();
+    }
   }
 
   override connectedCallback(): void {
@@ -98,6 +125,9 @@ export class UIDrawer extends UIElement {
           margin: var(--ui-space-3, 12px);
           box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
           animation: slide-in 160ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .panel { animation: none; }
         }
         .panel.left {
           left: 0;

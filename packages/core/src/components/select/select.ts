@@ -53,14 +53,86 @@ export class UISelect extends UIElement {
     }
   }
 
+  private activeIndex = -1;
+  private typeahead = '';
+  private typeaheadTimer: ReturnType<typeof setTimeout> | null = null;
+
+  private options(): HTMLElement[] {
+    return Array.from(this.querySelectorAll<HTMLElement>('ui-option')).filter((o) => !o.hasAttribute('disabled'));
+  }
+
+  /** 활성(키보드 하이라이트) 옵션을 표시한다. 옵션은 light DOM 이라 aria-activedescendant 대신 data-active 를 쓴다. */
+  private setActive(index: number): void {
+    const options = this.options();
+    options.forEach((opt, i) => {
+      if (i === index) opt.setAttribute('data-active', '');
+      else opt.removeAttribute('data-active');
+    });
+    this.activeIndex = index;
+    options[index]?.scrollIntoView?.({ block: 'nearest' });
+  }
+
+  private commit(option: HTMLElement): void {
+    const val = option.getAttribute('value') || '';
+    this.value = val;
+    this.close();
+    this.emit('change', { value: val });
+    this.root.querySelector<HTMLElement>('.trigger')?.focus();
+  }
+
   private handleKeyDown(e: KeyboardEvent): void {
     if (this.disabled) return;
-    if (e.key === ' ' || e.key === 'Enter') {
-      e.preventDefault();
-      this.toggle();
-    } else if (e.key === 'Escape' && this._isOpen) {
-      e.preventDefault();
-      this.close();
+    const options = this.options();
+    const selected = options.findIndex((o) => o.getAttribute('value') === this._selectedValue);
+
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowUp': {
+        e.preventDefault();
+        if (!this._isOpen) {
+          this.open();
+          this.setActive(selected >= 0 ? selected : e.key === 'ArrowDown' ? 0 : options.length - 1);
+          return;
+        }
+        if (options.length === 0) return;
+        const from = this.activeIndex < 0 ? selected : this.activeIndex;
+        const step = e.key === 'ArrowDown' ? 1 : -1;
+        this.setActive(from < 0 ? (step > 0 ? 0 : options.length - 1) : (from + step + options.length) % options.length);
+        return;
+      }
+      case 'Home':
+      case 'End':
+        if (!this._isOpen) return;
+        e.preventDefault();
+        this.setActive(e.key === 'Home' ? 0 : options.length - 1);
+        return;
+      case ' ':
+      case 'Enter': {
+        e.preventDefault();
+        if (this._isOpen && this.activeIndex >= 0 && options[this.activeIndex]) this.commit(options[this.activeIndex] as HTMLElement);
+        else this.toggle();
+        return;
+      }
+      case 'Escape':
+        if (this._isOpen) {
+          e.preventDefault();
+          this.close();
+        }
+        return;
+      case 'Tab':
+        if (this._isOpen) this.close(); // 포커스가 떠나면 목록을 닫는다
+        return;
+      default: {
+        // 타입어헤드: 입력한 글자로 시작하는 옵션으로 이동
+        if (e.key.length !== 1 || e.ctrlKey || e.metaKey || e.altKey) return;
+        this.typeahead += e.key.toLowerCase();
+        if (this.typeaheadTimer) clearTimeout(this.typeaheadTimer);
+        this.typeaheadTimer = setTimeout(() => (this.typeahead = ''), 600);
+        const hit = options.findIndex((o) => (o.textContent || '').trim().toLowerCase().startsWith(this.typeahead));
+        if (hit < 0) return;
+        if (!this._isOpen) this.open();
+        this.setActive(hit);
+      }
     }
   }
 
@@ -74,6 +146,8 @@ export class UISelect extends UIElement {
     if (this.disabled || this._isOpen) return;
     this._isOpen = true;
     this.render();
+    const options = this.options();
+    this.setActive(options.findIndex((o) => o.getAttribute('value') === this._selectedValue));
     this.emit('open');
   }
 
@@ -100,6 +174,9 @@ export class UISelect extends UIElement {
     const displayLabel = this._selectedLabel || placeholder;
     const isOpen = this._isOpen;
     const size = this.getAttribute('size') || 'md';
+
+    // 전체 재렌더가 트리거를 교체하므로, 포커스가 있었다면 새 트리거로 되돌린다(키보드 조작 유지).
+    const hadFocus = Boolean(this.root.activeElement?.classList.contains('trigger'));
 
     this.root.innerHTML = `
       <style>
@@ -169,6 +246,14 @@ export class UISelect extends UIElement {
           cursor: pointer;
           color: var(--ui-color-text-primary, #000000);
         }
+        ::slotted(ui-option[data-active]) {
+          background-color: var(--ui-color-bg-secondary, #ffebcc);
+          outline: 2px solid var(--ui-color-primary, #ff5500);
+          outline-offset: -2px;
+        }
+        ::slotted(ui-option[aria-selected="true"]) {
+          font-weight: var(--ui-font-weight-bold, 700);
+        }
         ::slotted(ui-option:hover) {
           background-color: var(--ui-color-bg-secondary, #ffebcc);
         }
@@ -179,6 +264,7 @@ export class UISelect extends UIElement {
         role="combobox"
         aria-expanded="${isOpen}"
         aria-haspopup="listbox"
+        aria-disabled="${disabled}"
       >
         <span>${this.escapeHtml(displayLabel)}</span>
         <svg class="arrow" viewBox="0 0 16 16">
@@ -190,6 +276,10 @@ export class UISelect extends UIElement {
       </div>
     `;
 
+    if (hadFocus) this.root.querySelector<HTMLElement>('.trigger')?.focus();
+    this.querySelectorAll('ui-option').forEach((opt) => {
+      opt.setAttribute('aria-selected', String(opt.getAttribute('value') === this._selectedValue));
+    });
     const trigger = this.root.querySelector('.trigger');
     if (trigger) {
       trigger.addEventListener('click', () => this.toggle());
@@ -199,12 +289,7 @@ export class UISelect extends UIElement {
     if (slot) {
       slot.addEventListener('click', (e) => {
         const option = this.composedTarget(e).closest('ui-option');
-        if (option) {
-          const val = option.getAttribute('value') || '';
-          this.value = val;
-          this.close();
-          this.emit('change', { value: val });
-        }
+        if (option && !option.hasAttribute('disabled')) this.commit(option as HTMLElement);
       });
     }
   }

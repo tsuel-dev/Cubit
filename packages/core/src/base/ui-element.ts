@@ -64,6 +64,15 @@ export abstract class UIElement extends HTMLElement {
     this.internals?.setFormValue(value);
   }
 
+  /**
+   * 폼 연관 컴포넌트에서 Enter 등으로 암묵 제출을 일으킨다.
+   * 사용자 지정 요소는 브라우저의 암묵 제출(Enter) 대상이 아니므로 requestSubmit 으로 직접 요청한다.
+   * 제출 버튼이 없는 폼도 requestSubmit 은 submit 이벤트를 발생시킨다.
+   */
+  protected requestFormSubmit(): void {
+    this.internals?.form?.requestSubmit();
+  }
+
   /** <fieldset disabled> 등으로 폼이 비활성/활성 상태를 바꿀 때 브라우저가 호출한다. */
   formDisabledCallback(disabled: boolean): void {
     this.formDisabled = disabled;

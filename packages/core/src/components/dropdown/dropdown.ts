@@ -49,11 +49,65 @@ export class UIDropdown extends UIElement {
     }
   }
 
+  private items(): HTMLElement[] {
+    return Array.from(this.querySelectorAll<HTMLElement>('ui-dropdown-item')).filter(
+      (item) => !item.hasAttribute('disabled') && item.getAttribute('aria-disabled') !== 'true',
+    );
+  }
+
+  private triggerElement(): HTMLElement | null {
+    const slot = this.root.querySelector<HTMLSlotElement>('slot[name="trigger"]');
+    return (slot?.assignedElements({ flatten: true })[0] as HTMLElement | undefined) ?? null;
+  }
+
   private handleKeyDown(e: KeyboardEvent): void {
-    if (e.key === 'Escape' && this._isOpen) {
-      e.preventDefault();
-      this.close();
+    if (this.disabled) return;
+    const items = this.items();
+    const active = items.findIndex((item) => item === document.activeElement || item.contains(document.activeElement));
+    switch (e.key) {
+      case 'Escape':
+        if (this._isOpen) {
+          e.preventDefault();
+          this.close();
+          this.triggerElement()?.focus(); // 닫으면 트리거로 포커스 복귀
+        }
+        return;
+      case 'ArrowDown':
+      case 'ArrowUp': {
+        e.preventDefault();
+        if (!this._isOpen) this.openDropdown();
+        const next = active < 0
+          ? (e.key === 'ArrowDown' ? 0 : items.length - 1)
+          : (active + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+        items[next]?.focus();
+        return;
+      }
+      case 'Home':
+      case 'End':
+        if (!this._isOpen) return;
+        e.preventDefault();
+        items[e.key === 'Home' ? 0 : items.length - 1]?.focus();
+        return;
+      case 'Enter':
+      case ' ':
+        // 항목에 포커스가 있을 때만 활성화(트리거 버튼의 기본 동작은 그대로 둔다)
+        if (this._isOpen && active >= 0) {
+          e.preventDefault();
+          items[active]?.click();
+        }
+        return;
+      case 'Tab':
+        if (this._isOpen) this.close();
+        return;
     }
+  }
+
+  /** 트리거에 메뉴 상태를 알린다(보조기기용). */
+  private syncTriggerAria(): void {
+    const trigger = this.triggerElement();
+    if (!trigger) return;
+    trigger.setAttribute('aria-haspopup', 'menu');
+    trigger.setAttribute('aria-expanded', String(this._isOpen));
   }
 
   public toggle(): void {
@@ -126,6 +180,7 @@ export class UIDropdown extends UIElement {
       </div>
     `;
 
+    this.syncTriggerAria();
     const triggerWrapper = this.root.querySelector('#trigger-wrapper');
     if (triggerWrapper) {
       const triggerEl = triggerWrapper as HTMLElement;
