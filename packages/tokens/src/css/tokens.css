@@ -77,3 +77,12 @@
   --ui-color-skeleton-shine: #f8f9fa;
   --ui-color-tile: #f7f8fa;
 }
+
+/* 동작 줄이기 선호: 전환을 즉시로. 컴포넌트의 transition 은 모두 이 토큰을 쓴다. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ui-transition-fast: 0s;
+    --ui-transition-normal: 0s;
+    --ui-transition-slow: 0s;
+  }
+}

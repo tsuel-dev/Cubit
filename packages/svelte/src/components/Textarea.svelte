@@ -20,6 +20,7 @@
   }>();
 
   function handleInput(e: CustomEvent<{ value: string }>) {
+    if (!(e instanceof CustomEvent)) return; // shadow 에서 새어 나온 기본 input 이벤트 무시
     value = e.detail?.value ?? '';
     dispatch('input', e.detail);
   }

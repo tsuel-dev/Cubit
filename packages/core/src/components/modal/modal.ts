@@ -1,5 +1,5 @@
 ﻿import { UIElement } from '../../base/ui-element';
-import { FocusTrap } from '../../base/focus-trap';
+import { FocusTrap, ScrollLock } from '../../base/focus-trap';
 
 export class UIModal extends UIElement {
   static get observedAttributes(): string[] {
@@ -7,6 +7,7 @@ export class UIModal extends UIElement {
   }
 
   private focusTrap: FocusTrap | null = null;
+  private scrollLock = new ScrollLock();
   private handleKeyDownBound: (e: KeyboardEvent) => void;
 
   constructor() {
@@ -42,8 +43,9 @@ export class UIModal extends UIElement {
     super.disconnectedCallback();
     document.removeEventListener('keydown', this.handleKeyDownBound);
     if (this.focusTrap) {
-      this.focusTrap.deactivate();
+      this.focusTrap.deactivate(false); // 요소가 사라지는 중이면 포커스 복원은 의미 없다
     }
+    this.scrollLock.unlock();
   }
 
   override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
@@ -55,12 +57,15 @@ export class UIModal extends UIElement {
         if (this.focusTrap) {
           this.focusTrap.deactivate();
         }
+        this.scrollLock.unlock();
       }
     }
   }
 
   private setupFocusTrap(): void {
+    this.scrollLock.lock();
     setTimeout(() => {
+      if (!this.open || !this.isConnected) return; // 열자마자 닫힌 경우
       if (!this.focusTrap) {
         this.focusTrap = new FocusTrap(this.root);
       }

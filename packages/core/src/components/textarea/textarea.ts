@@ -161,7 +161,8 @@ ${this.escapeHtml(currentVal)}</textarea>
     if (ta && wrapper) {
       ta.onfocus = () => wrapper.classList.add('focused');
       ta.onblur = () => wrapper.classList.remove('focused');
-      ta.oninput = () => {
+      ta.oninput = (e) => {
+        e.stopPropagation(); // 기본 input 이벤트의 shadow 밖 누수 방지(ui-input 과 동일)
         this.setAttribute('value', ta.value);
         this.emit('input', { value: ta.value });
       };
