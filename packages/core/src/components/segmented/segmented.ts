@@ -108,7 +108,7 @@ export class UISegmented extends UIElement {
 
   protected render(): void {
     const size = ['sm', 'md', 'lg'].includes(this.getAttribute('size') || '') ? (this.getAttribute('size') as string) : 'md';
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: inline-flex;
@@ -148,7 +148,7 @@ export class UISegmented extends UIElement {
         }
       </style>
       <slot></slot>
-    `;
+    `);
     this.root.querySelector('slot')?.addEventListener('slotchange', () => this.refresh());
   }
 }

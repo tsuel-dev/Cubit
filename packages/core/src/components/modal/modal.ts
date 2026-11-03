@@ -91,7 +91,7 @@ export class UIModal extends UIElement {
     const title = this.title;
     const ariaLabel = this.getAttribute('aria-label') || title || 'Dialog';
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: ${isOpen ? 'block' : 'none'};
@@ -199,7 +199,7 @@ export class UIModal extends UIElement {
           </div>
         </div>
       </div>
-    `;
+    `);
 
     const backdrop = this.root.querySelector('#backdrop');
     const closeBtn = this.root.querySelector('#closeBtn');

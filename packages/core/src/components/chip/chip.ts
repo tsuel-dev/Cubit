@@ -59,7 +59,7 @@ export class UIChip extends UIElement {
     else this.removeAttribute('tabindex');
     this.setAttribute('aria-disabled', String(disabled));
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host { display: inline-flex; font-family: var(--ui-font-family-base, sans-serif); outline: none; }
         :host(:focus-visible) .chip { box-shadow: 0 0 0 2px var(--ui-color-bg-canvas, #ffffff), 0 0 0 4px var(--ui-color-focus-ring, #ff5500); }
@@ -109,7 +109,7 @@ export class UIChip extends UIElement {
             : ''
         }
       </span>
-    `;
+    `);
 
     this.root.querySelector('button')?.addEventListener('click', (e) => {
       e.stopPropagation();

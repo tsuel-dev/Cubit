@@ -46,7 +46,7 @@ export class UIProgress extends UIElement {
     this.setAttribute('aria-valuemax', String(this.max));
     this.setAttribute('aria-label', ariaLabel);
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: block;
@@ -91,7 +91,7 @@ export class UIProgress extends UIElement {
       <div class="track ${size}">
         <div class="bar ${variant}"></div>
       </div>
-    `;
+    `);
   }
 }
 

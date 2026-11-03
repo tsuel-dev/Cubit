@@ -30,6 +30,13 @@ export class UITooltip extends UIElement {
     this.listen('keydown', (e) => {
       if (e.key === 'Escape') this.hide();
     });
+    // shadow 안의 요소는 light DOM 에서 id 로 참조할 수 없으므로, 설명 문구를 호스트의 aria-description 으로 노출한다.
+    this.syncDescription();
+  }
+
+  private syncDescription(): void {
+    if (this.content) this.setAttribute('aria-description', this.content);
+    else this.removeAttribute('aria-description');
   }
 
   public show(): void {
@@ -43,10 +50,11 @@ export class UITooltip extends UIElement {
   }
 
   protected render(): void {
+    this.syncDescription();
     const content = this.content;
     const position = this.position;
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: inline-block;
@@ -99,7 +107,7 @@ export class UITooltip extends UIElement {
       <div class="tooltip ${position}" role="tooltip" aria-hidden="true">
         ${content}
       </div>
-    `;
+    `);
   }
 }
 

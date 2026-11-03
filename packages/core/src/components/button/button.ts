@@ -31,7 +31,7 @@ export class UIButton extends UIElement {
     const disabled = this.disabled;
     const ariaLabel = this.getAttribute('aria-label') || '';
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: inline-block;
@@ -141,7 +141,7 @@ export class UIButton extends UIElement {
       >
         <slot></slot>
       </button>
-    `;
+    `);
 
     const btn = this.root.querySelector('button');
     if (btn) {

@@ -132,7 +132,7 @@ export class UIDropdown extends UIElement {
     const isOpen = this._isOpen;
     const placement = this.placement;
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: inline-block;
@@ -178,7 +178,7 @@ export class UIDropdown extends UIElement {
       <div class="popover ${placement}" role="menu" aria-hidden="${!isOpen}">
         <slot></slot>
       </div>
-    `;
+    `);
 
     this.syncTriggerAria();
     const triggerWrapper = this.root.querySelector('#trigger-wrapper');

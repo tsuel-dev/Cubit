@@ -124,7 +124,7 @@ export class UIRadio extends UIElement {
     this.setAttribute('aria-checked', String(checked));
     this.setAttribute('aria-disabled', String(disabled));
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: inline-flex;
@@ -178,7 +178,7 @@ export class UIRadio extends UIElement {
         <div class="inner"></div>
       </div>
       <span class="label"><slot></slot></span>
-    `;
+    `);
   }
 }
 

@@ -5,6 +5,25 @@
 
 const reflectedClasses = new WeakSet<object>();
 
+/** 같은 CSS 문자열은 한 번만 파싱해 모든 인스턴스가 공유한다(constructable stylesheet). */
+const sheetCache = new Map<string, CSSStyleSheet>();
+const SHEET_CACHE_LIMIT = 256;
+const supportsAdoptedSheets =
+  typeof CSSStyleSheet !== 'undefined' && 'replaceSync' in CSSStyleSheet.prototype && 'adoptedStyleSheets' in Document.prototype;
+
+function sheetFor(css: string): CSSStyleSheet {
+  let sheet = sheetCache.get(css);
+  if (!sheet) {
+    if (sheetCache.size >= SHEET_CACHE_LIMIT) sheetCache.clear(); // 상태 의존 CSS 가 쌓이는 것을 막는 단순 상한
+    sheet = new CSSStyleSheet();
+    sheet.replaceSync(css);
+    sheetCache.set(css, sheet);
+  }
+  return sheet;
+}
+
+const LEADING_STYLE = /^\s*<style>([\s\S]*?)<\/style>/;
+
 function toKebab(name: string): string {
   return name.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
 }
@@ -90,6 +109,21 @@ export abstract class UIElement extends HTMLElement {
     // 서브클래스에서 오버라이드하는 경우 super.disconnectedCallback() 호출 필수
     this.lifecycleAbort?.abort();
     this.lifecycleAbort = null;
+  }
+
+  /**
+   * 템플릿을 그린다. 맨 앞의 <style> 은 인스턴스마다 파싱하지 않고 공유 스타일시트로 채택하며,
+   * 미지원 환경이거나 맨 앞 <style> 이 없으면 기존처럼 innerHTML 로 그대로 넣는다.
+   */
+  protected paint(html: string): void {
+    const match = supportsAdoptedSheets ? LEADING_STYLE.exec(html) : null;
+    if (match) {
+      this.root.adoptedStyleSheets = [sheetFor(match[1] ?? '')];
+      this.root.innerHTML = html.slice(match[0].length);
+    } else {
+      if (supportsAdoptedSheets) this.root.adoptedStyleSheets = [];
+      this.root.innerHTML = html;
+    }
   }
 
   /**

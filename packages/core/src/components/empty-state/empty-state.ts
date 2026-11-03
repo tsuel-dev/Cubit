@@ -18,7 +18,7 @@ export class UIEmptyState extends UIElement {
     const size = this.getAttribute('size') === 'sm' ? 'sm' : 'md';
     const variant = ['default', 'error'].includes(this.getAttribute('variant') || '') ? (this.getAttribute('variant') as string) : 'default';
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host { display: block; font-family: var(--ui-font-family-base, sans-serif); }
         .box {
@@ -56,7 +56,7 @@ export class UIEmptyState extends UIElement {
         ${description ? `<p class="desc">${this.escapeHtml(description)}</p>` : ''}
         <div class="actions"><slot></slot></div>
       </div>
-    `;
+    `);
 
     // 슬롯에 내용이 있을 때만 영역을 보여준다(빈 점선 박스 안의 불필요한 여백 방지).
     const mark = (slotName: string | null, el: Element | null): void => {

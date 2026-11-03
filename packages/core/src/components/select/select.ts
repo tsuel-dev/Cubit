@@ -178,7 +178,7 @@ export class UISelect extends UIElement {
     // 전체 재렌더가 트리거를 교체하므로, 포커스가 있었다면 새 트리거로 되돌린다(키보드 조작 유지).
     const hadFocus = Boolean(this.root.activeElement?.classList.contains('trigger'));
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: inline-block;
@@ -274,7 +274,7 @@ export class UISelect extends UIElement {
       <div class="menu" role="listbox">
         <slot></slot>
       </div>
-    `;
+    `);
 
     if (hadFocus) this.root.querySelector<HTMLElement>('.trigger')?.focus();
     this.querySelectorAll('ui-option').forEach((opt) => {

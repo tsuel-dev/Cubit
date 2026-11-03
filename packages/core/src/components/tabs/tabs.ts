@@ -61,19 +61,33 @@ export class UITabs extends UIElement {
     }
   }
 
+  private uid: string | undefined;
+
   private syncTabsAndPanels(): void {
     const activeVal = this.value;
     const tabs = Array.from(this.querySelectorAll('ui-tab'));
     const panels = Array.from(this.querySelectorAll('ui-tab-panel'));
 
+    // 탭 ↔ 패널을 value 로 짝지어 보조기기가 관계를 알 수 있게 한다(id 가 없으면 부여).
+    const uid = this.uid ??= `ui-tabs-${Math.random().toString(36).slice(2, 8)}`;
+    const idFor = (kind: 'tab' | 'panel', value: string | null) => `${uid}-${kind}-${value ?? ''}`;
+
     tabs.forEach((tab) => {
       const isActive = tab.getAttribute('value') === activeVal;
       tab.setAttribute('aria-selected', String(isActive));
       tab.setAttribute('tabindex', isActive ? '0' : '-1');
+      if (!tab.id) tab.id = idFor('tab', tab.getAttribute('value'));
+      if (panels.some((p) => p.getAttribute('value') === tab.getAttribute('value'))) {
+        const panel = panels.find((p) => p.getAttribute('value') === tab.getAttribute('value'));
+        if (panel && !panel.id) panel.id = idFor('panel', panel.getAttribute('value'));
+        if (panel) tab.setAttribute('aria-controls', panel.id);
+      }
     });
 
     panels.forEach((panel) => {
       const isActive = panel.getAttribute('value') === activeVal;
+      const owner = tabs.find((t) => t.getAttribute('value') === panel.getAttribute('value'));
+      if (owner?.id) panel.setAttribute('aria-labelledby', owner.id);
       if (isActive) {
         panel.removeAttribute('hidden');
         panel.setAttribute('tabindex', '0');
@@ -84,7 +98,7 @@ export class UITabs extends UIElement {
   }
 
   protected render(): void {
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: block;
@@ -105,7 +119,7 @@ export class UITabs extends UIElement {
       <div class="panels-wrapper">
         <slot></slot>
       </div>
-    `;
+    `);
   }
 }
 

@@ -17,7 +17,7 @@ export class UICard extends UIElement {
     const variant = this.variant;
     const isBordered = this.bordered;
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: block;
@@ -63,7 +63,7 @@ export class UICard extends UIElement {
         </div>
         <slot name="footer"></slot>
       </div>
-    `;
+    `);
   }
 }
 

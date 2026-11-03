@@ -55,7 +55,7 @@ export class UIStepper extends UIElement {
 
   protected render(): void {
     const vertical = this.getAttribute('orientation') === 'vertical';
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: flex;
@@ -66,7 +66,7 @@ export class UIStepper extends UIElement {
         }
       </style>
       <slot></slot>
-    `;
+    `);
     this.root.querySelector('slot')?.addEventListener('slotchange', () => this.refresh());
   }
 }
@@ -103,7 +103,7 @@ export class UIStep extends UIElement {
           : this.escapeHtml(index);
     const stateText = { done: 'completed', active: 'current step', pending: 'upcoming', error: 'error' }[state] || '';
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: flex;
@@ -155,7 +155,7 @@ export class UIStep extends UIElement {
                <div class="text"><div class="label">${this.escapeHtml(label)}<span class="vh"> (${stateText})</span></div>${description ? `<div class="desc">${this.escapeHtml(description)}</div>` : ''}<slot></slot></div>
              </div>`
       }
-    `;
+    `);
   }
 }
 

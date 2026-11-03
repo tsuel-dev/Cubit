@@ -74,7 +74,7 @@ export class UIToast extends UIElement {
     const variant = this.variant;
     const isOpen = this.open;
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: ${isOpen ? 'block' : 'none'};
@@ -145,7 +145,7 @@ export class UIToast extends UIElement {
           </svg>
         </button>
       </div>
-    `;
+    `);
 
     const closeBtn = this.root.querySelector('#closeBtn');
     if (closeBtn) {

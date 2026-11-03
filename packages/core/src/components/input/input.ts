@@ -163,7 +163,7 @@ export class UIInput extends UIElement {
     const currentVal = this.getAttribute('value') || '';
     this.setFormValue(currentVal);
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: block;
@@ -245,7 +245,7 @@ export class UIInput extends UIElement {
           ${ariaLabel ? `aria-label="${this.escapeHtml(ariaLabel)}"` : ''}
         />
       </div>
-    `;
+    `);
 
     const input = this.root.querySelector('input');
     const wrapper = this.root.querySelector('.wrapper');

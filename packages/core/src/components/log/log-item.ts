@@ -26,7 +26,7 @@ export class UILogItem extends UIElement {
   protected render(): void {
     const time = this.time;
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: flex;
@@ -68,7 +68,7 @@ export class UILogItem extends UIElement {
       <span class="marker" aria-hidden="true"></span>
       ${time ? `<span class="time">${this.escapeHtml(time)}</span>` : ''}
       <span class="msg"><slot></slot></span>
-    `;
+    `);
   }
 }
 

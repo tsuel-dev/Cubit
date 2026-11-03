@@ -94,11 +94,11 @@ export class UIDrawer extends UIElement {
     const title = this.title;
 
     if (!open) {
-      this.root.innerHTML = '';
+      this.paint('');
       return;
     }
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           position: fixed;
@@ -196,7 +196,7 @@ export class UIDrawer extends UIElement {
         <div class="body"><slot></slot></div>
         <footer class="foot" style="display:none;"><slot name="footer"></slot></footer>
       </div>
-    `;
+    `);
 
     const footer = this.root.querySelector('footer.foot') as HTMLElement;
     if (this.querySelector('[slot="footer"]')) footer.style.display = 'block';

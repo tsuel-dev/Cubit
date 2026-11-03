@@ -94,7 +94,7 @@ export class UITextarea extends UIElement {
     const currentVal = this.getAttribute('value') || '';
     this.setFormValue(currentVal);
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host { display: block; font-family: var(--ui-font-family-base, sans-serif); }
         .wrapper {
@@ -154,7 +154,7 @@ export class UITextarea extends UIElement {
 ${this.escapeHtml(currentVal)}</textarea>
         ${hasMax ? `<div class="counter" aria-hidden="true">${currentVal.length} / ${maxlength}</div>` : ''}
       </div>
-    `;
+    `);
 
     const ta = this.root.querySelector('textarea');
     const wrapper = this.root.querySelector('.wrapper');

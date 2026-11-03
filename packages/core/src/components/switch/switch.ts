@@ -70,7 +70,7 @@ export class UISwitch extends UIElement {
     this.setAttribute('aria-disabled', String(disabled));
     this.setAttribute('tabindex', disabled ? '-1' : '0');
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: inline-flex;
@@ -128,7 +128,7 @@ export class UISwitch extends UIElement {
         <div class="thumb"></div>
       </div>
       <span class="label"><slot></slot></span>
-    `;
+    `);
   }
 }
 

@@ -46,7 +46,7 @@ export class UISkeleton extends UIElement {
           }).join('')
         : `<span class="shimmer ${variant === 'circle' ? 'circle' : variant === 'rect' ? 'rect' : 'bar'}" style="${widthStyle}${heightStyle}"></span>`;
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: block;
@@ -80,7 +80,7 @@ export class UISkeleton extends UIElement {
         }
       </style>
       <div class="wrap" aria-hidden="true">${bars}</div>
-    `;
+    `);
   }
 
   private escape(s: string): string {
