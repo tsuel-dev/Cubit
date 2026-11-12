@@ -36,7 +36,8 @@ export class UIRadio extends UIElement {
     this.defaultChecked = this.checked;
     super.connectedCallback();
     this.setAttribute('role', 'radio');
-    this.setAttribute('tabindex', this.checked ? '0' : '-1');
+    this.setAttribute('tabindex', this.disabled ? '-1' : this.checked ? '0' : '-1');
+    queueMicrotask(() => this.ensureTabStop());
     this.listen('click', this.handleClick.bind(this));
     this.listen('keydown', this.handleKeyDown.bind(this));
   }
@@ -54,7 +55,38 @@ export class UIRadio extends UIElement {
     if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
       this.select();
+      return;
     }
+    const step = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : e.key === 'ArrowUp' || e.key === 'ArrowLeft' ? -1 : 0;
+    if (step === 0) return;
+    // 같은 name 그룹에서 비활성 항목을 건너뛰어 순환 이동하고, 이동한 항목을 선택한다(네이티브 라디오와 동일).
+    const group = this.group().filter((el) => !el.disabled);
+    const index = group.indexOf(this);
+    if (index < 0 || group.length < 2) return;
+    e.preventDefault();
+    const next = group[(index + step + group.length) % group.length];
+    if (next) {
+      next.focus();
+      next.select();
+    }
+  }
+
+  /** 그룹에 체크된 항목이 없으면 첫 활성 항목을 Tab 으로 들어갈 수 있게 한다. */
+  private ensureTabStop(): void {
+    const group = this.group();
+    if (group.some((el) => el.checked && !el.disabled)) return;
+    const first = group.find((el) => !el.disabled);
+    group.forEach((el) => el.setAttribute('tabindex', el === first ? '0' : '-1'));
+  }
+
+  /** 같은 name 의 라디오들(name 이 없으면 자기 자신뿐). */
+  private group(): UIRadio[] {
+    const name = this.name;
+    if (!name) return [this];
+    const root = this.getRootNode() as Document | ShadowRoot;
+    return Array.from(root.querySelectorAll(`ui-radio[name="${CSS.escape(name)}"]`)).filter(
+      (el): el is UIRadio => el instanceof UIRadio,
+    );
   }
 
   /** <form>.reset() 시 초기 상태로 복원 */
@@ -92,7 +124,7 @@ export class UIRadio extends UIElement {
     this.setAttribute('aria-checked', String(checked));
     this.setAttribute('aria-disabled', String(disabled));
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: inline-flex;
@@ -146,7 +178,7 @@ export class UIRadio extends UIElement {
         <div class="inner"></div>
       </div>
       <span class="label"><slot></slot></span>
-    `;
+    `);
   }
 }
 

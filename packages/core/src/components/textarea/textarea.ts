@@ -94,7 +94,7 @@ export class UITextarea extends UIElement {
     const currentVal = this.getAttribute('value') || '';
     this.setFormValue(currentVal);
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host { display: block; font-family: var(--ui-font-family-base, sans-serif); }
         .wrapper {
@@ -154,14 +154,15 @@ export class UITextarea extends UIElement {
 ${this.escapeHtml(currentVal)}</textarea>
         ${hasMax ? `<div class="counter" aria-hidden="true">${currentVal.length} / ${maxlength}</div>` : ''}
       </div>
-    `;
+    `);
 
     const ta = this.root.querySelector('textarea');
     const wrapper = this.root.querySelector('.wrapper');
     if (ta && wrapper) {
       ta.onfocus = () => wrapper.classList.add('focused');
       ta.onblur = () => wrapper.classList.remove('focused');
-      ta.oninput = () => {
+      ta.oninput = (e) => {
+        e.stopPropagation(); // 기본 input 이벤트의 shadow 밖 누수 방지(ui-input 과 동일)
         this.setAttribute('value', ta.value);
         this.emit('input', { value: ta.value });
       };

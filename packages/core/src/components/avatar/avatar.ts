@@ -45,7 +45,7 @@ export class UIAvatar extends UIElement {
     const circle = this.shape !== 'square';
     const initials = this.getInitials(this.name);
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: inline-block;
@@ -95,7 +95,7 @@ export class UIAvatar extends UIElement {
             : `<span>${this.escapeHtml(initials)}</span>`
         }
       </div>
-    `;
+    `);
   }
 }
 

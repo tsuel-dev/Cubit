@@ -28,7 +28,7 @@ export class UINavbar extends UIElement {
     const brand = this.brand;
     const sticky = this.sticky;
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: block;
@@ -99,7 +99,7 @@ export class UINavbar extends UIElement {
         <div class="links"><slot></slot></div>
         <div class="actions"><slot name="actions"></slot></div>
       </nav>
-    `;
+    `);
   }
 }
 

@@ -20,7 +20,7 @@ export class UISpinner extends UIElement {
   protected render(): void {
     const size = this.size;
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: inline-block;
@@ -56,7 +56,7 @@ export class UISpinner extends UIElement {
         }
       </style>
       <div class="spinner ${size}"></div>
-    `;
+    `);
   }
 }
 

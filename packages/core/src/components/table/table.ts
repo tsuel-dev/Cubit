@@ -66,7 +66,7 @@ export class UITable extends UIElement {
     const isHoverable = this.hoverable;
     this.ensureLightCss();
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: block;
@@ -122,7 +122,7 @@ export class UITable extends UIElement {
       <table class="table-container" role="table">
         <slot></slot>
       </table>
-    `;
+    `);
   }
 }
 

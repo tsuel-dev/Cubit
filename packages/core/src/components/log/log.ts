@@ -113,7 +113,7 @@ export class UILog extends UIElement {
     const heightStyle = `height: ${this.height.replace(/["<>]/g, '')};`;
     const emptyText = this.escapeHtml(this.emptyText);
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: block;
@@ -187,7 +187,7 @@ export class UILog extends UIElement {
           <div class="empty">${emptyText}</div>
         </div>
       </div>
-    `;
+    `);
 
     this.root.querySelector('.copy-btn')?.addEventListener('click', () => {
       const text = this.items().map((i) => i.textContent ?? '').join('\n');

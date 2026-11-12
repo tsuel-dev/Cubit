@@ -36,7 +36,7 @@ export class UIAlert extends UIElement {
     const title = this.title;
     const closable = this.closable;
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: block;
@@ -123,7 +123,7 @@ export class UIAlert extends UIElement {
             : ''
         }
       </div>
-    `;
+    `);
 
     const closeBtn = this.root.querySelector('#closeBtn');
     if (closeBtn) {

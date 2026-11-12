@@ -28,7 +28,7 @@ export class UIAccordion extends UIElement {
   }
 
   protected render(): void {
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: block;
@@ -39,7 +39,7 @@ export class UIAccordion extends UIElement {
         }
       </style>
       <slot></slot>
-    `;
+    `);
   }
 }
 
@@ -80,7 +80,7 @@ export class UIAccordionItem extends UIElement {
     const isDisabled = this.disabled;
     const title = this.title;
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: block;
@@ -146,7 +146,7 @@ export class UIAccordionItem extends UIElement {
       <div class="content" role="region">
         <slot></slot>
       </div>
-    `;
+    `);
 
     const header = this.root.querySelector('.header');
     if (header) {

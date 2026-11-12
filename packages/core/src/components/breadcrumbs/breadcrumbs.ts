@@ -38,7 +38,7 @@ export class UIBreadcrumbs extends UIElement {
   }
 
   protected render(): void {
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: block;
@@ -57,7 +57,7 @@ export class UIBreadcrumbs extends UIElement {
       <ol>
         <slot></slot>
       </ol>
-    `;
+    `);
 
     const slot = this.root.querySelector('slot');
     if (slot) {
@@ -88,7 +88,7 @@ export class UIBreadcrumbItem extends UIElement {
     const current = this.current;
     const separator = this.separator;
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: inline-flex;
@@ -135,7 +135,7 @@ export class UIBreadcrumbItem extends UIElement {
         }
         ${separator ? `<span class="separator" aria-hidden="true">${this.escapeHtml(separator)}</span>` : ''}
       </li>
-    `;
+    `);
   }
 }
 

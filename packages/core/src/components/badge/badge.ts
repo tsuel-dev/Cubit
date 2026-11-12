@@ -17,7 +17,7 @@ export class UIBadge extends UIElement {
     const variant = this.variant;
     const size = this.size;
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: inline-flex;
@@ -84,7 +84,7 @@ export class UIBadge extends UIElement {
       <span class="badge ${variant} ${size}">
         <slot></slot>
       </span>
-    `;
+    `);
   }
 }
 

@@ -74,7 +74,7 @@ export class UIPagination extends UIElement {
       pages.push(i);
     }
 
-    this.root.innerHTML = `
+    this.paint(`
       <style>
         :host {
           display: inline-flex;
@@ -139,7 +139,7 @@ export class UIPagination extends UIElement {
       <button data-action="next" ${current >= totalPages ? 'disabled' : ''} aria-label="Next page">
         &rsaquo;
       </button>
-    `;
+    `);
   }
 }
 
