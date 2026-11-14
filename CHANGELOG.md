@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- 추가: `ui-link` 하이퍼링크 컴포넌트(React `Link`, Svelte `Link`). `href`·`target`·`rel`·`variant`(primary/muted/inherit)·`underline`·`external`·`disabled`·`download`, 안전하지 않은 스킴은 비활성 텍스트로 렌더, `target="_blank"`/`external` 은 `rel="noopener noreferrer"` 자동. / Added: `ui-link` with safe-URL handling and automatic `rel`.
 - 수정: `ui-input`/`ui-textarea` 의 기본 `input` 이벤트가 shadow 밖으로 새어 React/Svelte 래퍼 핸들러가 `{value}` 대신 `Event` 를 받던 문제. 래퍼도 `CustomEvent` 만 처리. / Fix: native `input` event leaked out of the shadow root, so wrapper handlers received an `Event` instead of `{value}`.
 - 추가: `ui-input` Enter 암묵 폼 제출(IME 조합 중 제외), 제약 검증(`required`/`pattern`/`maxlength` …)을 폼 검증에 연결, `autocomplete`·`inputmode`·`enterkeyhint`·`maxlength`·`minlength`·`required`·`pattern`·`min`·`max`·`step` 속성. / Added: implicit form submit on Enter, constraint validation wired into forms, and passthrough attributes.
 - 개선: `ui-input` 속성 변경(`aria-label`·`placeholder`·`invalid`·`disabled` 등)이 포커스·IME 조합을 끊지 않도록 제자리 갱신. / Improved: in-place attribute updates keep focus and IME composition.
