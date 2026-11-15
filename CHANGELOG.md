@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- 변경: 라이선스를 새 TLL-BY-NC-ND 조건(식별 `422DF40527`)으로 교체. 저작자 표기 `tsuel`, 비영리 모델 학습만 허용, AI 입력·검색 수집 금지, 사전 통지, 영리 이용은 cubit@mataku.org 별도 허락, 지역(KP·CN·RU)별 조건, 준거법 KR. `LICENSE`·패키지 LICENSE·README 갱신. / Changed: license replaced with the new TLL-BY-NC-ND terms (fingerprint `422DF40527`).
 - 추가: `ui-link` 하이퍼링크 컴포넌트(React `Link`, Svelte `Link`). `href`·`target`·`rel`·`variant`(primary/muted/inherit)·`underline`·`external`·`disabled`·`download`, 안전하지 않은 스킴은 비활성 텍스트로 렌더, `target="_blank"`/`external` 은 `rel="noopener noreferrer"` 자동. / Added: `ui-link` with safe-URL handling and automatic `rel`.
 - 수정: `ui-input`/`ui-textarea` 의 기본 `input` 이벤트가 shadow 밖으로 새어 React/Svelte 래퍼 핸들러가 `{value}` 대신 `Event` 를 받던 문제. 래퍼도 `CustomEvent` 만 처리. / Fix: native `input` event leaked out of the shadow root, so wrapper handlers received an `Event` instead of `{value}`.
 - 추가: `ui-input` Enter 암묵 폼 제출(IME 조합 중 제외), 제약 검증(`required`/`pattern`/`maxlength` …)을 폼 검증에 연결, `autocomplete`·`inputmode`·`enterkeyhint`·`maxlength`·`minlength`·`required`·`pattern`·`min`·`max`·`step` 속성. / Added: implicit form submit on Enter, constraint validation wired into forms, and passthrough attributes.

@@ -144,7 +144,7 @@ export default function App() {
               <p>모든 스타일은 Shadow DOM에 격리되어 프로젝트의 글로벌 CSS와 절대 충돌하지 않습니다.</p>
             </TabPanel>
             <TabPanel value="tab3">
-              <p>TLL-BY-NC-ND — 저작자 표시 필요 · 영리 이용·수정·AI 학습 금지 (LICENSE 참고)</p>
+              <p>TLL-BY-NC-ND — 저작자 표시 필요 · 영리 이용·수정 금지 · 상업용 AI 학습 금지 (LICENSE 참고)</p>
             </TabPanel>
           </Tabs>
 
