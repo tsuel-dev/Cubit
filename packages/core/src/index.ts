@@ -31,6 +31,7 @@ export * from './components/pagination/pagination';
 export * from './components/table/table';
 export * from './components/avatar/avatar';
 export * from './components/breadcrumbs/breadcrumbs';
+export * from './components/link/link';
 
 // 레이아웃 & 피드백 3종
 export * from './components/drawer/drawer';

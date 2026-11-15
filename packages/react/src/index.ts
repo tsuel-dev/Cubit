@@ -10,6 +10,7 @@ export * from './components/Toast';
 export * from './components/Tooltip';
 export * from './components/Tabs';
 export * from './components/Badge';
+export * from './components/Link';
 export * from './components/Spinner';
 export * from './components/Alert';
 export * from './components/Card';

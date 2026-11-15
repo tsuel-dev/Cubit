@@ -360,16 +360,17 @@ log.clear();                                       // 전체 비우기
 Cubit UI는 **TLL-BY-NC-ND** ([Tsuel Liberty License](https://tll.mataku.org))로 제공됩니다. 한국어 문구가 기준이며, 다른 언어와 다르면 한국어가 우선합니다.
 
 - 라이선스 전문: [`LICENSE`](./LICENSE)
-- [라이선스 상세 링크 (쉬운 설명·조건 확인)](https://tll.mataku.org/?lang=ko#/detail?by=1&attr=tsuel%28%40tsuel-dev%29&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=RU%2CCN%2CKP&ad=none&ai=deny)
+- [라이선스 상세 링크 (쉬운 설명·조건 확인)](https://tll.mataku.org/?lang=ko#/detail?by=1&attr=tsuel&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=KP%2CCN%2CRU&ad=none&ai=nc-only&rp_e=1&rp=%5B%5B%22KP%22%2C1%2C%22combined%22%2C%22%22%2C%22legal%22%2C%22%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%28KR%29%EC%9D%98+%EB%82%A8%EB%B6%81%EA%B5%90%EB%A5%98%ED%98%91%EB%A0%A5%EB%B2%95%28Inter-Korean+Exchange+and+Cooperation+Act%29%EC%97%90+%EB%94%B0%EB%9D%BC+%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD+%EA%B5%AD%EB%AF%BC%EC%9D%80+%EB%B6%81%ED%95%9C%28KP%29%EC%97%90+%EC%9E%90%EB%A3%8C%EB%A5%BC+%EC%A0%9C%EA%B3%B5%ED%95%A0+%EC%88%98+%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4.+%EA%B4%80%EB%A0%A8%ED%95%98%EC%97%AC+%EC%A0%95%EB%B6%80+%EA%B8%B0%EA%B4%80%EC%9D%98+%ED%97%88%EA%B0%80%EA%B0%80+%ED%95%84%EC%9A%94%ED%95%A9%EB%8B%88%EB%8B%A4.%22%2C%22contract%22%2C%22%22%5D%2C%5B%22CN%22%2C1%2C%22combined%22%2C%22%22%2C%22security%2ChumanRights%22%2C%22%EA%B5%AD%EA%B0%80+%EC%B0%A8%EC%9B%90%EC%9D%98+%EC%9D%B8%ED%84%B0%EB%84%B7+%EA%B2%80%EC%97%B4%2C+%ED%91%9C%ED%98%84%EC%9D%98+%EC%9E%90%EC%9C%A0+%EC%A0%9C%ED%95%9C+%EB%B0%8F+%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4+%ED%86%B5%EC%A0%9C+%EB%AC%B8%EC%A0%9C%2C+%EC%A0%80%EC%9E%91%EA%B6%8C+%EC%9D%98%EC%8B%9D%EC%9D%98+%EA%B5%AD%EA%B0%80%EC%A0%81+%EB%B6%80%EC%9E%AC+%EB%93%B1%EC%9C%BC%EB%A1%9C+%EC%9D%B8%ED%95%B4+%EC%A0%9C%ED%95%9C%ED%95%A9%EB%8B%88%EB%8B%A4.%22%2C%22%22%2C%22%22%5D%2C%5B%22RU%22%2C1%2C%22territory%22%2C%22%22%2C%22conflict%22%2C%22%EB%9D%BC%EC%9D%B4%EC%84%BC%EC%8A%A4+%EC%A0%9C%EA%B3%B5%EC%9E%90%EB%8A%94+%EC%A0%84%EC%9F%81%EC%97%90+%EA%B2%B0%EC%82%AC+%EB%B0%98%EB%8C%80%ED%95%98%EB%A9%B0%2C+%EB%8C%80%EB%9F%AC%EC%8B%9C%EC%95%84+%EA%B2%BD%EC%A0%9C%EC%A0%9C%EC%9E%AC+%EC%A0%95%EC%B1%85%EC%97%90+%EB%8F%99%EC%9D%98%ED%95%98%EA%B3%A0+%EC%9D%B4%EB%A5%BC+%EC%A4%80%EC%88%98%ED%95%98%EA%B8%B0+%EC%9C%84%ED%95%9C+%EC%A1%B0%EC%B9%98%EC%9E%85%EB%8B%88%EB%8B%A4.+%EC%9D%B4%EC%97%90+%EB%8C%80%ED%95%B4+%EC%86%8C%EB%AA%85%ED%95%A0+%EC%88%98+%EC%9E%88%EA%B1%B0%EB%82%98+%EC%A0%84%EC%9F%81%EC%97%90+%EB%B0%98%EB%8C%80%ED%95%98%EB%8A%94+%EC%A6%9D%EB%B9%99+%EC%9E%90%EB%A3%8C%EA%B0%80+%EC%9E%88%EC%9D%84+%EA%B2%BD%EC%9A%B0+%ED%97%88%EC%9A%A9%EB%90%A9%EB%8B%88%EB%8B%A4.%22%2C%22contract%22%2C%22%22%5D%5D&aii=deny&aix=deny&ail=1&tdm=1&fb=military%2Csurveillance%2Chate%2Cadult%2Cgambling&pat=grantRetaliate&bnd=allow&cp=docs&cc_e=1&cc_c=cubit%40mataku.org&tm=1&nt=before&term_e=1&term_d=0&law=KR&note=default+contact+%3A+cubit%40mataku.org&fp=422DF40527)
 - TLL 소개 및 생성기: <https://tll.mataku.org>
 
 | 조건 | 내용 |
 |---|---|
-| BY | 저작자 `tsuel(@tsuel-dev)`를 **저작물 제목 + 이름 + 링크**로 표시해야 합니다 |
+| BY | 저작자 `tsuel`를 **저작물 제목 + 이름 + 링크**로 표시해야 합니다 |
 | NC | 영리 목적 이용 금지 |
 | ND | 수정·2차 저작물 제작 금지 |
 | 지역 | 러시아·중국·북한에서는 이용 금지 |
-| AI | 인공지능·기계학습 모델의 학습 데이터로 사용 금지 |
+| AI | 비영리·학술 연구용 모델 학습만 허용(상업용 AI 학습 금지), AI 입력 이용·AI 검색/색인 수집 금지, AI 사용 시 표시 |
+| 기타 | 사용 전 저작자에게 통지 · 영리 이용은 cubit@mataku.org로 별도 허락 · 군사·감시·혐오·성인물·도박 목적 이용 금지 · 수정 없이 다른 제품에 포함 가능 |
 
 - 이 라이선스는 크리에이티브 커먼즈 라이선스가 **아니며**, 오픈소스(OSI) 정의를 충족하지 않습니다.
 - 이 문서는 법적 효력에 대해 전문가(변호사) 검토가 필요하며, 자동 생성된 문구는 법률 자문이 아닙니다.

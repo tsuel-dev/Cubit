@@ -20,6 +20,7 @@ const page_html = `<!doctype html><meta charset="utf-8"><body>
 <div id="rg"><ui-radio name="g" value="1" id="r1">1</ui-radio><ui-radio name="g" value="2" id="r2">2</ui-radio><ui-radio name="g" value="3" id="r3" disabled>3</ui-radio><ui-radio name="g" value="4" id="r4">4</ui-radio></div>
 <ui-tabs id="tabs" value="a"><ui-tab value="a">A</ui-tab><ui-tab value="b">B</ui-tab><ui-tab-panel value="a">pa</ui-tab-panel><ui-tab-panel value="b">pb</ui-tab-panel></ui-tabs>
 <ui-tooltip id="tt" content="Helpful"><button>h</button></ui-tooltip>
+<ui-link id="lk" href="https://example.com/a?x=1&y=2">go</ui-link><ui-link id="lkx" href="https://example.com" external>ext</ui-link><ui-link id="lkb" href="javascript:alert(1)">bad</ui-link><ui-link id="lkd" href="/x" disabled>off</ui-link>
 <ui-button id="b1">1</ui-button><ui-button id="b2">2</ui-button>
 <script type="module" src="/cubit-core.js"></script>`;
 
@@ -170,6 +171,17 @@ try {
   });
   check('stylesheet-shared-between-instances', shared.same && shared.noStyleTag, JSON.stringify(shared));
 
+  const links = await page.evaluate(() => {
+    const q = (id) => document.getElementById(id).shadowRoot.querySelector('.link');
+    return {
+      ok: q('lk').tagName === 'A' && q('lk').getAttribute('href') === 'https://example.com/a?x=1&y=2' && !q('lk').hasAttribute('rel'),
+      ext: q('lkx').target === '_blank' && q('lkx').rel === 'noopener noreferrer',
+      bad: q('lkb').tagName === 'SPAN' && !q('lkb').hasAttribute('href'),
+      off: q('lkd').tagName === 'SPAN' && q('lkd').getAttribute('aria-disabled') === 'true',
+    };
+  });
+  check('link-render-safe-rel-disabled', links.ok && links.ext && links.bad && links.off, JSON.stringify(links));
+  check('link-focusable', await page.evaluate(() => { const h = document.getElementById('lk'); h.shadowRoot.querySelector('a').focus(); return h.shadowRoot.activeElement?.tagName === 'A'; }));
   check('no-page-errors', errors.length === 0, errors.join(' | ').slice(0, 300));
 } catch (error) {
   results._fatal = `FAIL ${error.stack?.split('\n').slice(0, 3).join(' ')}`;

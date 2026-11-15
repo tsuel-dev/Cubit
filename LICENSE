@@ -1,57 +1,205 @@
 Cubit UI — Tsuel Liberty License (TLL-BY-NC-ND)
-Copyright (c) 2026 tsuel(@tsuel-dev)
+Copyright (c) 2026 tsuel
 https://tll.mataku.org
+Identifier: TLL-BY-NC-ND · v1.0 · 422DF40527
+Contact: cubit@mataku.org
 
 [한국어 — 기준 문구 / Korean — authoritative text]
 
 이 소프트웨어(Cubit UI)와 관련 문서는 아래 조건에 따라서만 이용이 허락됩니다.
-아래 조건을 모두 지키는 경우에 한해, 이용자는 이 저작물을 복제하고 그대로(수정 없이) 이용할 수 있습니다.
 
 === TLL-BY-NC-ND (Tsuel Liberty License) ===
+
+법적 효력 및 면책 고지
 
 이 문서는 법적 효력에 대해 전문가(변호사) 검토가 필요하며, 자동 생성된 문구는 법률 자문이 아닙니다.
 
 저작자 표시 의무
-  이용자는 저작물을 이용할 때 원저작자 'tsuel(@tsuel-dev)'을(를) 저작물 제목 + 이름 + 링크 방식으로 명시해야 합니다.
+
+이용자는 저작물을 이용할 때 원저작자 'tsuel'을(를) 저작물 제목 + 이름 + 링크 방식으로 명시해야 합니다.
+
 비영리 이용 제한
-  이 저작물은 어떠한 형태의 영리적 목적이나 상업적 이익을 위한 용도로 이용될 수 없습니다.
+
+이 저작물은 어떠한 형태의 영리적 목적이나 상업적 이익을 위한 용도로 이용될 수 없습니다.
+
 변경 및 2차 저작물 제작 금지
-  이 저작물을 수정, 변형하거나 이를 바탕으로 한 새로운 2차적 저작물을 작성하여 배포할 수 없습니다.
+
+이 저작물을 수정, 변형하거나 이를 바탕으로 한 새로운 2차적 저작물을 작성하여 배포할 수 없습니다.
+
 지역적 효력 범위
-  명시된 지역(러시아(RU), 중국(CN), 북한(KP))에서는 본 저작물의 이용이 제한되며, 그 외 지역에서만 유효합니다.
+
+명시된 지역(북한(KP), 중국(CN), 러시아(RU))에서는 본 저작물의 이용이 제한되며, 그 외 지역에서만 유효합니다.
+
 인공지능 모델 학습 권한
-  본 저작물을 인공지능 또는 기계학습 모델의 데이터셋으로 수집하거나 학습시키는 행위를 엄격히 금지합니다.
+
+본 저작물은 학술 연구, 비영리 모델의 학습 데이터로만 사용할 수 있으며 상업용 AI 모델 학습은 금지됩니다.
+
+나라별 개별 조건
+
+위 지역 제한은 저작자가 정한 다음의 나라별 조건에 따라 나라마다 따로 정해집니다. [북한(KP)] 국적 또는 거주지·소재지 중 하나라도 그 나라에 해당하면 적용합니다. 제한 사유: 법령·제재·수출통제를 지키기 위해. 저작자의 설명: “대한민국(KR)의 남북교류협력법(Inter-Korean Exchange and Cooperation Act)에 따라 대한민국 국민은 북한(KP)에 자료를 제공할 수 없습니다. 관련하여 정부 기관의 허가가 필요합니다.” 저작자는 다음에 대해 별도로 이용을 허락할 수 있습니다: 별도 서면 계약에 따른 이용. [중국(CN)] 국적 또는 거주지·소재지 중 하나라도 그 나라에 해당하면 적용합니다. 제한 사유: 보안·안전상의 우려 때문에, 인권·윤리적인 이유로. 저작자의 설명: “국가 차원의 인터넷 검열, 표현의 자유 제한 및 개인정보 통제 문제, 저작권 의식의 국가적 부재 등으로 인해 제한합니다.” [러시아(RU)] 그 나라에 거주하거나 소재하는 개인과 법인에게 적용합니다. 제한 사유: 전쟁·무력 분쟁과 관련되어서. 저작자의 설명: “라이센스 제공자는 전쟁에 결사 반대하며, 대러시아 경제제재 정책에 동의하고 이를 준수하기 위한 조치입니다. 이에 대해 소명할 수 있거나 전쟁에 반대하는 증빙 자료가 있을 경우 허용됩니다.” 저작자는 다음에 대해 별도로 이용을 허락할 수 있습니다: 별도 서면 계약에 따른 이용.
+
+법률 준수 안내
+
+이 라이선스는 관련 법률과 국제 제재를 위반하는 행위를 허락하지 않습니다. 이 라이선스의 지역 제한은 저작권 이용허락의 범위를 정하는 것이며, 법률상 수출통제나 반출 승인 의무를 대신하지 않습니다. 특정 국가의 이용자를 제한했다고 해서 그 나라로의 데이터 전송이 자동으로 막히는 것은 아닙니다. 실제로 법률상 의무가 생기는 경우에는 그 법률과 규정이 먼저 적용되며, 강행법규에 따라 배제할 수 없는 권리와 의무는 그대로 유지됩니다. 지역 제한은 허락의 범위에 관한 것이어서, 소스코드를 보거나 내려받거나 갖고 있는 일을 그것만으로 금지된 행위로 정하지 않습니다.
+
+AI 입력 이용 금지
+
+이용자는 이 저작물을 인공지능의 입력(프롬프트, 참조 자료, 미세 조정 자료 등)으로 사용하여 이 저작물과 비슷하거나 이 저작물을 바탕으로 한 결과물을 만들어서는 안 됩니다.
+
+AI 검색·색인 수집 금지
+
+이 저작물을 인공지능 기반 검색, 색인, 요약, 답변 생성 서비스를 위해 수집하거나 저장하거나 인용하는 것은 허락되지 않습니다.
+
+AI 사용 표시
+
+인공지능의 도움을 받아 이 저작물을 바탕으로 만든 결과물에는 인공지능을 사용했다는 사실을 분명히 밝혀야 합니다.
+
+텍스트·데이터 마이닝 권리 유보
+
+저작자는 이 저작물의 복제와 추출을 텍스트·데이터 마이닝에 이용할 권리를 명시적으로 유보합니다(유럽연합 디지털단일시장 저작권 지침 제4조 등 관련 법령에 따른 유보를 포함합니다).
+
+이용 목적 제한
+
+다음 목적을 위한 이용은 허락되지 않습니다: 군사·무기 개발, 감시·인권 침해, 혐오·차별 선동, 성인물, 도박.
+
+특허
+
+저작자는 이 라이선스가 허락하는 이용 범위에서, 이 저작물을 이용하는 데 필요한 저작자 보유 특허를 이용자가 무상으로 사용할 수 있도록 허락합니다. 다만 이용자가 이 저작물이 자신의 특허를 침해한다며 소송을 제기하면, 이 특허 허락과 이 라이선스에 따른 이용 허락은 그 시점에 종료됩니다.
+
+다른 제품에 포함
+
+이용자는 이 저작물을 수정하지 않은 상태로 자신의 프로그램·제품·서비스에 포함하여 배포하거나 제공할 수 있습니다. 이 경우에도 이 라이선스의 다른 조건은 그대로 적용됩니다.
+
+저작자 표시 위치
+
+저작자 표시는 이용자의 제품이나 서비스에 딸린 설명서, README, 소개 페이지 같은 문서에 해야 합니다.
+
+영리 이용 별도 허락
+
+영리 목적의 이용은 이 라이선스로 허락되지 않습니다. 영리 목적으로 이용하려면 cubit@mataku.org로 문의하여 별도의 허락을 받아야 합니다.
+
+이름·상표 사용 제한
+
+이 라이선스는 저작자의 이름, 상표, 로고를 사용할 권리를 주지 않습니다. 저작자가 이용자나 이용자의 제품·서비스를 추천하거나 후원하는 것처럼 보이게 사용해서는 안 됩니다. 다만 저작자 표시 의무를 지키는 데 필요한 범위는 예외입니다.
+
+이용 사실 통지
+
+이용자는 이 저작물을 이용하기 전에 저작자에게 그 사실을 알려야 합니다.
+
+위반 시 이용 허락 종료
+
+이용자가 이 라이선스의 조건을 어기면 이용 허락은 즉시 종료되며, 저작자가 다시 허락하기 전에는 이용할 수 없습니다.
+
+준거법
+
+이 라이선스는 대한민국(KR)의 법률에 따라 해석되고 적용됩니다.
+
+저작자의 추가 설명
+
+default contact : cubit@mataku.org
 
 한국어 문구가 기준이며 다른 언어와 다르면 한국어가 우선합니다.
-라이선스 상세 링크: https://tll.mataku.org/?lang=ko#/detail?by=1&attr=tsuel%28%40tsuel-dev%29&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=RU%2CCN%2CKP&ad=none&ai=deny
+라이선스 상세 링크: https://tll.mataku.org/?lang=ko#/detail?by=1&attr=tsuel&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=KP%2CCN%2CRU&ad=none&ai=nc-only&rp_e=1&rp=%5B%5B%22KP%22%2C1%2C%22combined%22%2C%22%22%2C%22legal%22%2C%22%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%28KR%29%EC%9D%98+%EB%82%A8%EB%B6%81%EA%B5%90%EB%A5%98%ED%98%91%EB%A0%A5%EB%B2%95%28Inter-Korean+Exchange+and+Cooperation+Act%29%EC%97%90+%EB%94%B0%EB%9D%BC+%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD+%EA%B5%AD%EB%AF%BC%EC%9D%80+%EB%B6%81%ED%95%9C%28KP%29%EC%97%90+%EC%9E%90%EB%A3%8C%EB%A5%BC+%EC%A0%9C%EA%B3%B5%ED%95%A0+%EC%88%98+%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4.+%EA%B4%80%EB%A0%A8%ED%95%98%EC%97%AC+%EC%A0%95%EB%B6%80+%EA%B8%B0%EA%B4%80%EC%9D%98+%ED%97%88%EA%B0%80%EA%B0%80+%ED%95%84%EC%9A%94%ED%95%A9%EB%8B%88%EB%8B%A4.%22%2C%22contract%22%2C%22%22%5D%2C%5B%22CN%22%2C1%2C%22combined%22%2C%22%22%2C%22security%2ChumanRights%22%2C%22%EA%B5%AD%EA%B0%80+%EC%B0%A8%EC%9B%90%EC%9D%98+%EC%9D%B8%ED%84%B0%EB%84%B7+%EA%B2%80%EC%97%B4%2C+%ED%91%9C%ED%98%84%EC%9D%98+%EC%9E%90%EC%9C%A0+%EC%A0%9C%ED%95%9C+%EB%B0%8F+%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4+%ED%86%B5%EC%A0%9C+%EB%AC%B8%EC%A0%9C%2C+%EC%A0%80%EC%9E%91%EA%B6%8C+%EC%9D%98%EC%8B%9D%EC%9D%98+%EA%B5%AD%EA%B0%80%EC%A0%81+%EB%B6%80%EC%9E%AC+%EB%93%B1%EC%9C%BC%EB%A1%9C+%EC%9D%B8%ED%95%B4+%EC%A0%9C%ED%95%9C%ED%95%A9%EB%8B%88%EB%8B%A4.%22%2C%22%22%2C%22%22%5D%2C%5B%22RU%22%2C1%2C%22territory%22%2C%22%22%2C%22conflict%22%2C%22%EB%9D%BC%EC%9D%B4%EC%84%BC%EC%8A%A4+%EC%A0%9C%EA%B3%B5%EC%9E%90%EB%8A%94+%EC%A0%84%EC%9F%81%EC%97%90+%EA%B2%B0%EC%82%AC+%EB%B0%98%EB%8C%80%ED%95%98%EB%A9%B0%2C+%EB%8C%80%EB%9F%AC%EC%8B%9C%EC%95%84+%EA%B2%BD%EC%A0%9C%EC%A0%9C%EC%9E%AC+%EC%A0%95%EC%B1%85%EC%97%90+%EB%8F%99%EC%9D%98%ED%95%98%EA%B3%A0+%EC%9D%B4%EB%A5%BC+%EC%A4%80%EC%88%98%ED%95%98%EA%B8%B0+%EC%9C%84%ED%95%9C+%EC%A1%B0%EC%B9%98%EC%9E%85%EB%8B%88%EB%8B%A4.+%EC%9D%B4%EC%97%90+%EB%8C%80%ED%95%B4+%EC%86%8C%EB%AA%85%ED%95%A0+%EC%88%98+%EC%9E%88%EA%B1%B0%EB%82%98+%EC%A0%84%EC%9F%81%EC%97%90+%EB%B0%98%EB%8C%80%ED%95%98%EB%8A%94+%EC%A6%9D%EB%B9%99+%EC%9E%90%EB%A3%8C%EA%B0%80+%EC%9E%88%EC%9D%84+%EA%B2%BD%EC%9A%B0+%ED%97%88%EC%9A%A9%EB%90%A9%EB%8B%88%EB%8B%A4.%22%2C%22contract%22%2C%22%22%5D%5D&aii=deny&aix=deny&ail=1&tdm=1&fb=military%2Csurveillance%2Chate%2Cadult%2Cgambling&pat=grantRetaliate&bnd=allow&cp=docs&cc_e=1&cc_c=cubit%40mataku.org&tm=1&nt=before&term_e=1&term_d=0&law=KR&note=default+contact+%3A+cubit%40mataku.org&fp=422DF40527
 
-보증 없음: 이 저작물은 "있는 그대로" 제공되며, 상품성·특정 목적 적합성·권리 비침해를 포함하여 명시적이든 묵시적이든 어떠한 보증도 하지 않습니다. 저작자는 이 저작물의 이용과 관련하여 발생하는 어떠한 손해에 대해서도 책임지지 않습니다.
+본 라이선스는 크리에이티브 커먼즈(Creative Commons)의 공식 라이선스가 아니며, 독자적으로 구성된 TLL 라이선스입니다.
 
 ------------------------------------------------------------------------
 
 [English — translation / 번역]
 
 This software (Cubit UI) and its documentation are licensed only under the conditions below.
-Provided you comply with all of them, you may copy and use this work unmodified.
 
 === TLL-BY-NC-ND (Tsuel Liberty License) ===
+
+Legal Effect and Disclaimer Notice
 
 This document needs review by a legal professional (lawyer) to confirm its legal effect. Automatically generated text is not legal advice.
 
 Attribution Requirement
-  Users must credit the original author 'tsuel(@tsuel-dev)' using the Work Title + Name + Link method.
+
+Users must credit the original author 'tsuel' using the Work Title + Name + Link method.
+
 Non-Commercial Restriction
-  This work cannot be used for any commercial purpose or monetary gain.
+
+This work cannot be used for any commercial purpose or monetary gain.
+
 Prohibition on Modifications and Derivatives
-  You may not modify, transform, or build upon this work to distribute new derivative works.
+
+You may not modify, transform, or build upon this work to distribute new derivative works.
+
 Geographical Scope
-  Use of this work is prohibited in the specified regions (Russia (RU), China (CN), North Korea (KP)). It is valid in all other regions.
+
+Use of this work is prohibited in the specified regions (North Korea (KP), China (CN), Russia (RU)). It is valid in all other regions.
+
 AI Training Permissions
-  Collecting or using this work to train AI or machine learning models is strictly prohibited.
+
+This work may only be used for research and non-commercial AI training. Commercial AI training is prohibited.
+
+Country-Specific Terms
+
+The region limit above is determined for each country individually, according to the following terms set by the Licensor. [North Korea (KP)] Applies if either nationality or residence/location falls in that country. Reasons: To comply with laws, sanctions or export controls. The Licensor's explanation: “대한민국(KR)의 남북교류협력법(Inter-Korean Exchange and Cooperation Act)에 따라 대한민국 국민은 북한(KP)에 자료를 제공할 수 없습니다. 관련하여 정부 기관의 허가가 필요합니다.” The Licensor may separately grant permission for: use under a separate written agreement. [China (CN)] Applies if either nationality or residence/location falls in that country. Reasons: Because of security or safety concerns, For human-rights or ethical reasons. The Licensor's explanation: “국가 차원의 인터넷 검열, 표현의 자유 제한 및 개인정보 통제 문제, 저작권 의식의 국가적 부재 등으로 인해 제한합니다.” [Russia (RU)] Applies to individuals and entities residing or located there. Reasons: Because of war or armed conflict. The Licensor's explanation: “라이센스 제공자는 전쟁에 결사 반대하며, 대러시아 경제제재 정책에 동의하고 이를 준수하기 위한 조치입니다. 이에 대해 소명할 수 있거나 전쟁에 반대하는 증빙 자료가 있을 경우 허용됩니다.” The Licensor may separately grant permission for: use under a separate written agreement.
+
+Legal Compliance Notice
+
+This license does not permit any act that violates applicable laws or international sanctions. The region limits of this license define the scope of the copyright permission and do not replace any legal obligation regarding export controls or export approval. Limiting users of a certain country does not automatically block the transfer of data to that country. Where a legal obligation actually arises, that law and its rules take precedence, and rights and obligations that cannot be excluded under mandatory law remain in place. Because region limits concern the scope of permission, merely viewing, downloading or holding the source code is not by itself defined as a prohibited act.
+
+No Use as AI Input
+
+You must not use this work as input to an artificial intelligence system (as a prompt, reference or fine-tuning material) to generate output that resembles or is based on this work.
+
+No Collection for AI Search or Indexing
+
+Collecting, storing or quoting this work for AI-based search, indexing, summarization or answer-generation services is not permitted.
+
+Disclosing AI Use
+
+Any output made with the help of artificial intelligence and based on this work must clearly state that AI was used.
+
+Text and Data Mining Reservation
+
+The author expressly reserves the right to reproduce and extract this work for text and data mining, including the reservation of rights under Article 4 of the EU Directive on Copyright in the Digital Single Market and similar laws.
+
+Prohibited Purposes
+
+Use for the following purposes is not permitted: Military and weapons, Surveillance and rights abuse, Hate and discrimination, Adult content, Gambling.
+
+Patents
+
+Within the scope of use this license allows, the author grants you a royalty-free license under the author's patents, to the extent needed to use this work. If you sue anyone claiming that this work infringes your patents, this patent license and your permission under this license end at that moment.
+
+Inclusion in Other Products
+
+You may include this work, unmodified, in your own programs, products or services and distribute or provide it. All other terms of this license still apply.
+
+Placement of Attribution
+
+The attribution must appear in the documentation that comes with your product or service, such as a manual, README or about page.
+
+Separate Commercial License
+
+Commercial use is not permitted under this license. To use the work commercially, contact cubit@mataku.org to obtain a separate license.
+
+Name and Trademark Use
+
+This license does not grant any right to use the author's name, trademarks or logos. You must not use them in a way that suggests the author endorses or sponsors you or your products or services, except as needed to meet the attribution requirement.
+
+Notice of Use
+
+You must tell the author before you start using this work.
+
+Termination for Breach
+
+If you breach any term of this license, your permission to use the work ends immediately and does not return unless the author grants it again.
+
+Governing Law
+
+This license is interpreted and applied under the laws of South Korea (KR).
+
+Author's Additional Note
+
+default contact : cubit@mataku.org
 
 Korean text is the reference. If another language differs, the Korean text applies.
-License details link: https://tll.mataku.org/?lang=en#/detail?by=1&attr=tsuel%28%40tsuel-dev%29&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=RU%2CCN%2CKP&ad=none&ai=deny&lang=en
-
-NO WARRANTY: This work is provided "as is", without warranty of any kind, express or implied, including but not limited to merchantability, fitness for a particular purpose, and non-infringement. The author is not liable for any damages arising from the use of this work.
+License details link: https://tll.mataku.org/?lang=en#/detail?by=1&attr=tsuel&cm=titleNameLink&sa=0&nc=1&nd=1&reg_e=1&reg_m=forbid&reg_l=KP%2CCN%2CRU&ad=none&ai=nc-only&rp_e=1&rp=%5B%5B%22KP%22%2C1%2C%22combined%22%2C%22%22%2C%22legal%22%2C%22%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%28KR%29%EC%9D%98+%EB%82%A8%EB%B6%81%EA%B5%90%EB%A5%98%ED%98%91%EB%A0%A5%EB%B2%95%28Inter-Korean+Exchange+and+Cooperation+Act%29%EC%97%90+%EB%94%B0%EB%9D%BC+%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD+%EA%B5%AD%EB%AF%BC%EC%9D%80+%EB%B6%81%ED%95%9C%28KP%29%EC%97%90+%EC%9E%90%EB%A3%8C%EB%A5%BC+%EC%A0%9C%EA%B3%B5%ED%95%A0+%EC%88%98+%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4.+%EA%B4%80%EB%A0%A8%ED%95%98%EC%97%AC+%EC%A0%95%EB%B6%80+%EA%B8%B0%EA%B4%80%EC%9D%98+%ED%97%88%EA%B0%80%EA%B0%80+%ED%95%84%EC%9A%94%ED%95%A9%EB%8B%88%EB%8B%A4.%22%2C%22contract%22%2C%22%22%5D%2C%5B%22CN%22%2C1%2C%22combined%22%2C%22%22%2C%22security%2ChumanRights%22%2C%22%EA%B5%AD%EA%B0%80+%EC%B0%A8%EC%9B%90%EC%9D%98+%EC%9D%B8%ED%84%B0%EB%84%B7+%EA%B2%80%EC%97%B4%2C+%ED%91%9C%ED%98%84%EC%9D%98+%EC%9E%90%EC%9C%A0+%EC%A0%9C%ED%95%9C+%EB%B0%8F+%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4+%ED%86%B5%EC%A0%9C+%EB%AC%B8%EC%A0%9C%2C+%EC%A0%80%EC%9E%91%EA%B6%8C+%EC%9D%98%EC%8B%9D%EC%9D%98+%EA%B5%AD%EA%B0%80%EC%A0%81+%EB%B6%80%EC%9E%AC+%EB%93%B1%EC%9C%BC%EB%A1%9C+%EC%9D%B8%ED%95%B4+%EC%A0%9C%ED%95%9C%ED%95%A9%EB%8B%88%EB%8B%A4.%22%2C%22%22%2C%22%22%5D%2C%5B%22RU%22%2C1%2C%22territory%22%2C%22%22%2C%22conflict%22%2C%22%EB%9D%BC%EC%9D%B4%EC%84%BC%EC%8A%A4+%EC%A0%9C%EA%B3%B5%EC%9E%90%EB%8A%94+%EC%A0%84%EC%9F%81%EC%97%90+%EA%B2%B0%EC%82%AC+%EB%B0%98%EB%8C%80%ED%95%98%EB%A9%B0%2C+%EB%8C%80%EB%9F%AC%EC%8B%9C%EC%95%84+%EA%B2%BD%EC%A0%9C%EC%A0%9C%EC%9E%AC+%EC%A0%95%EC%B1%85%EC%97%90+%EB%8F%99%EC%9D%98%ED%95%98%EA%B3%A0+%EC%9D%B4%EB%A5%BC+%EC%A4%80%EC%88%98%ED%95%98%EA%B8%B0+%EC%9C%84%ED%95%9C+%EC%A1%B0%EC%B9%98%EC%9E%85%EB%8B%88%EB%8B%A4.+%EC%9D%B4%EC%97%90+%EB%8C%80%ED%95%B4+%EC%86%8C%EB%AA%85%ED%95%A0+%EC%88%98+%EC%9E%88%EA%B1%B0%EB%82%98+%EC%A0%84%EC%9F%81%EC%97%90+%EB%B0%98%EB%8C%80%ED%95%98%EB%8A%94+%EC%A6%9D%EB%B9%99+%EC%9E%90%EB%A3%8C%EA%B0%80+%EC%9E%88%EC%9D%84+%EA%B2%BD%EC%9A%B0+%ED%97%88%EC%9A%A9%EB%90%A9%EB%8B%88%EB%8B%A4.%22%2C%22contract%22%2C%22%22%5D%5D&aii=deny&aix=deny&ail=1&tdm=1&fb=military%2Csurveillance%2Chate%2Cadult%2Cgambling&pat=grantRetaliate&bnd=allow&cp=docs&cc_e=1&cc_c=cubit%40mataku.org&tm=1&nt=before&term_e=1&term_d=0&law=KR&note=default+contact+%3A+cubit%40mataku.org&fp=422DF40527
 
 TLL (Tsuel Liberty License) is a custom license and is not a Creative Commons license.
