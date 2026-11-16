@@ -21,6 +21,8 @@ const page_html = `<!doctype html><meta charset="utf-8"><body>
 <ui-tabs id="tabs" value="a"><ui-tab value="a">A</ui-tab><ui-tab value="b">B</ui-tab><ui-tab-panel value="a">pa</ui-tab-panel><ui-tab-panel value="b">pb</ui-tab-panel></ui-tabs>
 <ui-tooltip id="tt" content="Helpful"><button>h</button></ui-tooltip>
 <ui-link id="lk" href="https://example.com/a?x=1&y=2">go</ui-link><ui-link id="lkx" href="https://example.com" external>ext</ui-link><ui-link id="lkb" href="javascript:alert(1)">bad</ui-link><ui-link id="lkd" href="/x" disabled>off</ui-link>
+<ui-accordion id="acc"><ui-accordion-item id="a1" title="A1">x</ui-accordion-item><ui-accordion-item id="a2" title="A2" disabled>y</ui-accordion-item><ui-accordion-item id="a3" title="A3">z</ui-accordion-item></ui-accordion>
+<ui-toast id="ts" variant="success" duration="300">hi</ui-toast><ui-toast id="te" variant="error" duration="0">bad</ui-toast>
 <ui-button id="b1">1</ui-button><ui-button id="b2">2</ui-button>
 <script type="module" src="/cubit-core.js"></script>`;
 
@@ -182,6 +184,25 @@ try {
   });
   check('link-render-safe-rel-disabled', links.ok && links.ext && links.bad && links.off, JSON.stringify(links));
   check('link-focusable', await page.evaluate(() => { const h = document.getElementById('lk'); h.shadowRoot.querySelector('a').focus(); return h.shadowRoot.activeElement?.tagName === 'A'; }));
+  const hdr = (id) => `document.getElementById('${id}').shadowRoot.querySelector('.header')`;
+  await page.evaluate((h) => { eval(h).focus(); }, hdr('a1'));
+  await page.keyboard.press('Enter');
+  const acc1 = await page.evaluate(() => { const r = document.getElementById('a1').shadowRoot; return { exp: r.querySelector('.header').getAttribute('aria-expanded'), focus: r.activeElement?.classList.contains('header'), ctl: r.querySelector('.header').getAttribute('aria-controls') === r.querySelector('.content').id }; });
+  check('accordion-enter-keeps-focus', acc1.exp === 'true' && acc1.focus && acc1.ctl, JSON.stringify(acc1));
+  await page.keyboard.press('ArrowDown');
+  check('accordion-arrow-skips-disabled', await page.evaluate(() => document.getElementById('a3').shadowRoot.activeElement?.classList.contains('header')));
+  await page.keyboard.press('Home');
+  check('accordion-home', await page.evaluate(() => document.getElementById('a1').shadowRoot.activeElement?.classList.contains('header')));
+  check('toast-roles', await page.evaluate(() => { const a = document.getElementById('ts'), b = document.getElementById('te'); return a.getAttribute('role') === 'status' && b.getAttribute('role') === 'alert' && b.getAttribute('aria-live') === 'assertive'; }));
+  await page.evaluate(() => { document.getElementById('ts').open = true; });
+  await page.hover('#ts'); await wait(700);
+  const heldOpen = await page.evaluate(() => document.getElementById('ts').open);
+  await page.mouse.move(2, 2); await wait(700);
+  const closedAfter = await page.evaluate(() => !document.getElementById('ts').open);
+  check('toast-pauses-on-hover', heldOpen && closedAfter, JSON.stringify({ heldOpen, closedAfter }));
+  await page.evaluate(() => { const t = document.getElementById('te'); t.open = true; t.shadowRoot.querySelector('#closeBtn').focus(); });
+  await page.keyboard.press('Escape');
+  check('toast-escape-closes', await page.evaluate(() => !document.getElementById('te').open));
   check('no-page-errors', errors.length === 0, errors.join(' | ').slice(0, 300));
 } catch (error) {
   results._fatal = `FAIL ${error.stack?.split('\n').slice(0, 3).join(' ')}`;

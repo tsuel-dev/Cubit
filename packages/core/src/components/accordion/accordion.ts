@@ -76,6 +76,7 @@ export class UIAccordionItem extends UIElement {
   }
 
   protected render(): void {
+    const hadFocus = !!this.root.activeElement?.classList.contains('header');
     const isOpen = this.open;
     const isDisabled = this.disabled;
     const title = this.title;
@@ -134,21 +135,24 @@ export class UIAccordionItem extends UIElement {
       </style>
       <div
         class="header ${isOpen ? 'open' : ''} ${isDisabled ? 'disabled' : ''}"
+        id="header"
         role="button"
         tabindex="${isDisabled ? '-1' : '0'}"
         aria-expanded="${isOpen}"
+        aria-controls="panel"
+        aria-disabled="${isDisabled}"
       >
         <span>${this.escapeHtml(title)}</span>
         <svg class="icon" viewBox="0 0 16 16">
           <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="square" />
         </svg>
       </div>
-      <div class="content" role="region">
+      <div class="content" id="panel" role="region" aria-labelledby="header">
         <slot></slot>
       </div>
     `);
 
-    const header = this.root.querySelector('.header');
+    const header = this.root.querySelector<HTMLElement>('.header');
     if (header) {
       header.addEventListener('click', () => this.toggle());
       header.addEventListener('keydown', (e: Event) => {
@@ -156,8 +160,26 @@ export class UIAccordionItem extends UIElement {
         if (kb.key === ' ' || kb.key === 'Enter') {
           kb.preventDefault();
           this.toggle();
+          return;
+        }
+        const move = kb.key === 'ArrowDown' ? 1 : kb.key === 'ArrowUp' ? -1 : kb.key === 'Home' ? 'first' : kb.key === 'End' ? 'last' : 0;
+        if (!move) return;
+        const group = this.closest('ui-accordion');
+        if (!group) return;
+        const headers = Array.from(group.querySelectorAll('ui-accordion-item'))
+          .filter((it) => !it.hasAttribute('disabled'))
+          .map((it) => it.shadowRoot?.querySelector<HTMLElement>('.header'))
+          .filter((h): h is HTMLElement => !!h);
+        const i = headers.indexOf(header);
+        const target =
+          move === 'first' ? headers[0] : move === 'last' ? headers[headers.length - 1] : headers[(i + move + headers.length) % headers.length];
+        if (target) {
+          kb.preventDefault();
+          target.focus();
         }
       });
+      // 열고 닫을 때 헤더가 다시 그려지므로 키보드 포커스를 되돌린다.
+      if (hadFocus) header.focus();
     }
   }
 }

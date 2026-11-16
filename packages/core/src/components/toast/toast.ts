@@ -6,6 +6,18 @@ export class UIToast extends UIElement {
   }
 
   private timer: number | null = null;
+  private paused = false;
+  private readonly onEnter = (): void => {
+    this.paused = true;
+    this.clearTimer();
+  };
+  private readonly onLeave = (): void => {
+    this.paused = false;
+    if (this.open) this.startTimer();
+  };
+  private readonly onKey = (e: KeyboardEvent): void => {
+    if (e.key === 'Escape' && this.open) this.close();
+  };
 
   get variant(): string {
     return this.getAttribute('variant') || 'info';
@@ -25,8 +37,13 @@ export class UIToast extends UIElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.setAttribute('role', 'status');
-    this.setAttribute('aria-live', 'polite');
+    this.syncLiveRegion();
+    // 마우스를 올리거나 포커스가 들어가 있는 동안에는 자동으로 닫지 않는다(WCAG 2.2.1), Esc 로 닫는다.
+    this.addEventListener('mouseenter', this.onEnter);
+    this.addEventListener('mouseleave', this.onLeave);
+    this.addEventListener('focusin', this.onEnter);
+    this.addEventListener('focusout', this.onLeave);
+    this.addEventListener('keydown', this.onKey);
     if (this.open) {
       this.startTimer();
     }
@@ -35,17 +52,30 @@ export class UIToast extends UIElement {
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.clearTimer();
+    this.removeEventListener('mouseenter', this.onEnter);
+    this.removeEventListener('mouseleave', this.onLeave);
+    this.removeEventListener('focusin', this.onEnter);
+    this.removeEventListener('focusout', this.onLeave);
+    this.removeEventListener('keydown', this.onKey);
   }
 
   override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
     super.attributeChangedCallback(name, oldValue, newValue);
+    if (name === 'variant') this.syncLiveRegion();
     if (name === 'open') {
       if (this.open) {
-        this.startTimer();
+        if (!this.paused) this.startTimer();
       } else {
         this.clearTimer();
       }
     }
+  }
+
+  /** 오류·경고는 즉시 읽어 주고(role=alert), 나머지는 정중하게(role=status) 알린다. */
+  private syncLiveRegion(): void {
+    const urgent = this.variant === 'error' || this.variant === 'warning';
+    this.setAttribute('role', urgent ? 'alert' : 'status');
+    this.setAttribute('aria-live', urgent ? 'assertive' : 'polite');
   }
 
   private startTimer(): void {
